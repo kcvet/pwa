@@ -56,6 +56,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Login( {history} ) {
+  console.log('history: ', history);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   async function handleSubmit() {

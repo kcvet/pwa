@@ -24,7 +24,7 @@ import CardList from './CardList'
 import { loadPartialConfig } from '@babel/core';
 import ReactPaginate from 'react-paginate';
 import './pagination.css'
-
+import InfiniteScroll from 'react-infinite-scroller';
 /*
 const useStyles = makeStyles(theme => ({
     root: {
@@ -63,11 +63,11 @@ const useStyles = makeStyles(theme => ({
   }
   
   const headRows = [
-    { id: 'id', numeric: true, disablePadding: true, label: 'id' },
+    { id: 'id', numeric: false, disablePadding: true, label: 'id' },
     { id: 'plateNumber', numeric: true, disablePadding: false, label: 'plate number' },
-    { id: 'status', numeric: true, disablePadding: false, label: 'status' },
-    { id: 'condition', numeric: true, disablePadding: false, label: 'condition' },
-    { id: 'vins', numeric: true, disablePadding: false, label: 'vins' },
+    { id: 'status', numeric: false, disablePadding: false, label: 'status' },
+    { id: 'condition', numeric: false, disablePadding: false, label: 'condition' },
+    { id: 'vins', numeric: false, disablePadding: false, label: 'vins' },
   ];
 
   
@@ -260,14 +260,10 @@ function CarList() {
             setIsLoading(true);
         try {
             const result = await axios("https://api.avant2go.com/api/cars/")
-            console.log('result.data: ', result.data);
             setCars(result.data);
-            console.log('setCars: ', setCars);
-            console.log('cars: ', cars);
         } catch (error) {
         //notifyError("Error when getting cars. Please refresh the page");
         }
-        console.log('cars: ', cars);
         setIsLoading(false);
 
         };
@@ -324,7 +320,7 @@ function CarList() {
                                   inputProps={{ 'aria-labelledby': labelId }}
                                 />
                               </TableCell>
-                              <TableCell component="th" id={labelId} scope="row" padding="none">
+                              <TableCell display='block' align="right">
                                 {row._id}
                               </TableCell>
                               <TableCell display='block' align="right">{row.plateNumber}</TableCell>
@@ -369,7 +365,6 @@ function CarList() {
       </button></div> )
 }
 */
-
 const handlePageClick = data => {
   let selected = data.selected;
   let offset = Math.ceil(selected * this.props.perPage);
@@ -388,6 +383,7 @@ function CarList() {
   const fetchCarData = async () => { 
   try {
       const result = await axios('https://api.avant2go.com/api/cars?populate=["carModelID"]')
+      console.log('const result : ', result );
       setCars(result.data);
   } catch (error) {
   //notifyError("Error when getting cars. Please refresh the page");
@@ -398,28 +394,15 @@ function CarList() {
   }, []);
   
     if(cars.length > 0){
+      console.log('cars: ', cars);
       console.log(pageCount)
     return(
-      <div className="react-paginate">
-       <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
         <CardList cars={cars}></CardList>
-      </div>
     ) } else {
     return(
       <div>
       </div>
     )}
 }
+
 export default CarList;

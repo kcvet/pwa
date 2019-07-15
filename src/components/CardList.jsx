@@ -57,7 +57,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Album(cars) {
   console.log('cars: ', cars);
@@ -75,11 +74,11 @@ export default function Album(cars) {
         </Toolbar>
       </AppBar>
       <main>
-        <Container className={classes.cardGrid} maxWidth="md">
+        <Container className={classes.cardGrid} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
             {cars.cars.map(card => (
-              <Grid item key={card._id} xs={12} sm={6} md={4}>
+              <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}

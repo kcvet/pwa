@@ -12,7 +12,7 @@ class App extends Component {
             <Fragment>
                 <Switch>
                   <Route  exact path="/" render={(props) => (isAuthenticated() === true? <Dashboard {...props} />: <Redirect to='/login' />)} />
-                  <Route path="/login" component={Login}/>
+                  <Route path="/login" component={(props) => Login ({...props})}/>
                 </Switch>  
             </Fragment>
           </div>
