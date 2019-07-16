@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
+import ReactPaginate from 'react-paginate';
+import './pagination.css'
 
 function MadeWithLove() {
   return (
@@ -74,6 +76,17 @@ export default function Album(cars) {
         </Toolbar>
       </AppBar>
       <main>
+      <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+        />
         <Container className={classes.cardGrid} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
