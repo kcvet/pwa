@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -15,26 +16,16 @@ const FILES_TO_CACHE = [
 ];
 const CACHE_NAME = 'static-cache-v1';
 
-
-export function register() {
-    
-    // CODELAB: Register service worker.
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/serviceWorker.js')
-            .then((reg) => {
-              console.log('Service worker registered.', reg);
-            });
-      });
-    }
-}
+console.log("service worker waking up")
 
 
+self.addEventListener('activate', function(event) {
+  console.log('Claiming control');
+  event.waitUntil(self.clients.claim());
+  });
 
 
-
-
-window.addEventListener('install', (evt) => {
+self.addEventListener('install', (evt) => { 
   console.log('[ServiceWorker] Install');
   // CODELAB: Precache static resources here.
   // CODELAB: Precache static resources here.
@@ -44,12 +35,46 @@ window.addEventListener('install', (evt) => {
         return cache.addAll(FILES_TO_CACHE);
       })
   );
-  window.skipWaiting();
+  self.skipWaiting();
 });
 
-window.addEventListener('activate', (evt) => {
-  console.log('[ServiceWorker] Activate');
-  // CODELAB: Remove previous cached data from disk.
+self.addEventListener('activate', function(event) {
+  console.log('Claiming control');
+  event.waitUntil(self.clients.claim());
+  });
+
+/*
+'use strict';
+
+const FILES_TO_CACHE = [
+  '/offline.html',
+];
+const CACHE_NAME = 'static-cache-v1';
+
+console.log("service worker waking up")
+
+
+self.addEventListener('activate', function(event) {
+  console.log('Claiming control');
+  event.waitUntil(self.clients.claim());
+  });
+
+
+self.addEventListener('install', (evt) => { 
+  console.log('[ServiceWorker] Install');
+  // CODELAB: Precache static resources here.
+  // CODELAB: Precache static resources here.
+  evt.waitUntil(
+      caches.open(CACHE_NAME).then((cache) => {
+        console.log('[ServiceWorker] Pre-caching offline page');
+        return cache.addAll(FILES_TO_CACHE);
+      })
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (evt) => {
+  console.log('[ServiceWorker] Activate kr nmeki');
   // CODELAB: Remove previous cached data from disk.
   evt.waitUntil(
       caches.keys().then((keyList) => {
@@ -61,17 +86,14 @@ window.addEventListener('activate', (evt) => {
         }));
       })
   );
-  window.clients.claim();
+  self.clients.claim();
 });
 
-
-
-
-window.addEventListener('fetch', (evt) => {
+self.addEventListener('fetch', (evt) => {
   console.log('[ServiceWorker] Fetch', evt.request.url);
   // CODELAB: Add fetch event handler here.
   
-  // CODELAB: Add fetch event handler here.
+  // CODELAB: Add fetch event handler here. 
     if (evt.request.mode !== 'navigate') {
     // Not a page navigation, bail.
     return;
@@ -81,14 +103,12 @@ window.addEventListener('fetch', (evt) => {
         .catch(() => {
           return caches.open(CACHE_NAME)
               .then((cache) => {
-                console.log('cache: ', cache);
                 return cache.match('offline.html');
               });
         })
     );
 
 });
-
 
 export function unregister() {
   if ('serviceWorker' in navigator) {
@@ -97,3 +117,4 @@ export function unregister() {
     });
   }
 }
+*/

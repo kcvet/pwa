@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react'
 
 import axios from 'axios'
-import CardList from './CardList'
+import Locations from './Locations'
 import './pagination.css'
 
 const handlePageClick = data => {
@@ -14,16 +14,16 @@ const handlePageClick = data => {
 };
 
 function CarList() {
-  const [cars, setCars] = useState([]);
+  const [locations, setLocations] = useState([]);
   const [pageCount, setPageCount] = useState(0);
 
   
   useEffect(()=> {
   const fetchCarData = async () => { 
   try {
-      const result = await axios('https://api.avant2go.com/api/cars?populate=["carModelID"]')
+      const result = await axios('https://api.avant2go.com/api/locations')
       console.log('const result : ', result );
-      setCars(result.data);
+      setLocations(result.data);
   } catch (error) {
   //notifyError("Error when getting cars. Please refresh the page");
   }
@@ -32,11 +32,11 @@ function CarList() {
   fetchCarData();
   }, []);
   
-    if(cars.length > 0){
-      console.log('cars: ', cars);
+    if(locations.length > 0){
+      console.log('cars: ', locations);
       console.log(pageCount)
     return(
-        <CardList locations={locations}></CardList>
+        <Locations locations={locations}></Locations>
     ) } else {
     return(
       <div>

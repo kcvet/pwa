@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { Component, Fragment  } from 'react';
 import './App.css';
 import { Route, Switch, Redirect} from "react-router-dom";
@@ -21,3 +22,4 @@ class App extends Component {
   }
 
 export default App;
+
