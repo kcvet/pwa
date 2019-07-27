@@ -4,12 +4,13 @@ import './index.css';
 import App from './App';
 import { createBrowserHistory } from "history";
 import { Router } from "react-router-dom";
+import Dashboard from './components/Dashboard';
 
 const history = createBrowserHistory();
 
     ReactDOM.render(
         <Router history={history}>
-            <App />
+            <Dashboard />
         </Router>,
         document.getElementById("root")
       );
@@ -17,9 +18,10 @@ const history = createBrowserHistory();
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-const swUrl = `/src/sw.js`;
+
+const swUrl = `/sw.js`;
+console.log('swUrl: ', swUrl);
 if ('serviceWorker' in navigator) {
-    console.log('navigator: ', navigator);
   window.addEventListener('load', () => {
     navigator.serviceWorker.register(swUrl)
         .then((reg) => {

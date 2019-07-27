@@ -566,7 +566,10 @@ module.exports = function(webpackEnv) {
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the Webpack build.
-      isEnvProduction &&
+
+       new WorkboxWebpackPlugin.InjectManifest({ swSrc: 'src/sw.js', }),
+      
+      /*isEnvProduction &&
         new WorkboxWebpackPlugin.GenerateSW({
           clientsClaim: true,
           exclude: [/\.map$/, /asset-manifest\.json$/],
@@ -579,7 +582,7 @@ module.exports = function(webpackEnv) {
             // public/ and not a SPA route
             new RegExp('/[^/]+\\.[^/]+$'),
           ],
-        }),
+        }), */
       // TypeScript type checking
       useTypeScript &&
         new ForkTsCheckerWebpackPlugin({

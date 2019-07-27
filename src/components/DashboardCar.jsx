@@ -1,5 +1,4 @@
-/* eslint-disable no-restricted-globals */
-import React, { Children } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -25,7 +24,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { logOut } from './Auth';
-import {Redirect} from "react-router-dom";
 import {
   ListAlt,
   DirectionsCar,
@@ -128,9 +126,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dashboard({ children, match, container, history }) {
-  console.log('history: ', history);
-  console.log('children: ', children);
+export default function Dashboard(props) {
+    console.log('props: ', props);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const render = <Table/>
@@ -161,10 +158,9 @@ export default function Dashboard({ children, match, container, history }) {
   ];
 
   
-  const path = () => {
-   history.push('', '/cars')
+  const route = (el) => {
+   render = <Locations/>
   }
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
@@ -204,24 +200,17 @@ export default function Dashboard({ children, match, container, history }) {
         </div>
         <Divider />
         <List>
-        <Link            
-            key="locations"
-            to="/cars"
-            style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
-          >
-
-      <ListItem button key="locations" >
-            <ListItemIcon ><Room/></ListItemIcon>
-            <ListItemText>cars</ListItemText>
+        <ListItem button key="locations">
+            <ListItemIcon><Room/></ListItemIcon>
+            <ListItemText primary="locations" />
           </ListItem>
-          </Link>
         </List>
         <Divider />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          {children}
+          <Table/>
         </Container>
         <MadeWithLove />
       </main>

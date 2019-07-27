@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-restricted-globals */
 // This optional code is used to register a service worker.
 // register() is not called by default.
@@ -11,8 +12,21 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
+
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js');
+
+if (workbox) {
+  console.log(`Yay! Workbox is loaded 🎉`);
+
+  workbox.precaching.precacheAndRoute([]);
+
+} else {
+  console.log(`Boo! Workbox didn't load 😬`);
+}
+
+
 const FILES_TO_CACHE = [
-  '/offline.html',
+  'offline.html',
 ];
 const CACHE_NAME = 'static-cache-v1';
 
@@ -43,6 +57,28 @@ self.addEventListener('activate', function(event) {
   event.waitUntil(self.clients.claim());
   });
 
+
+  self.addEventListener('fetch', (evt) => {
+    console.log('[ServiceWorker] Fetch', evt.request.url);
+    // CODELAB: Add fetch event handler here.
+    
+    // CODELAB: Add fetch event handler here. 
+      if (evt.request.mode !== 'navigate') {
+      // Not a page navigation, bail.
+      return;
+      }
+      evt.respondWith(
+      fetch(evt.request)
+          .catch(() => {
+            console.log("returning Cache")
+            return caches.open(CACHE_NAME)
+                .then((cache) => {
+                  return cache.match('offline.html');
+                });
+          })
+      );
+  
+  });
 /*
 'use strict';
 
@@ -74,7 +110,7 @@ self.addEventListener('install', (evt) => {
 });
 
 self.addEventListener('activate', (evt) => {
-  console.log('[ServiceWorker] Activate kr nmeki');
+  console.log('[ServiceWorker] Activat6e kr nmeki');
   // CODELAB: Remove previous cached data from disk.
   evt.waitUntil(
       caches.keys().then((keyList) => {
