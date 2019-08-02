@@ -14,11 +14,11 @@ export const isAuthenticated = () => {
   
   export const login = async (password, email) => {
     try {
-      const { data } = await axios.post(`https://api.avant2go.com/auth/local`, {
+      const { data } = await axios.post(`http://localhost:9000/auth/local`, {
           password,
           email
         });
-      const userData = await axios.get(`https://api.avant2go.com/api/users/me`, {
+      const userData = await axios.get(`http://localhost:9000/api/users/me`, {
         headers: {
           authorization: `Bearer ${data.token}`
         }

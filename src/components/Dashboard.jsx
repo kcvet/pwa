@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { Children } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,27 +11,17 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import CarList from './CarList'
-import Table from './Table'
-import Locations from './LocationList';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import { logOut } from './Auth';
-import {Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {
-  ListAlt,
-  DirectionsCar,
-  Flag,
   Room,
-  InsertDriveFile
 } from "@material-ui/icons";
 
 
@@ -39,7 +29,7 @@ function MadeWithLove() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Built with love by the '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to="https://material-ui.com/">
         Material-UI
       </Link>
       {' team.'}
@@ -128,43 +118,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dashboard({ children, match, container, history }) {
-  console.log('history: ', history);
-  console.log('children: ', children);
+export default function Dashboard({ children, history }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const render = <Table/>
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const menu = [
-    { name: "Cars", icon: <DirectionsCar />, path: "/cars" },
-    { name: "Countries", icon: <Flag />, path: "/countries" },
-    { name: "Extras", icon: <InsertDriveFile />, path: "/extras" },
-    { name: "Locations", icon: <Room />, path: "/locations" },
-    { name: "Reservations", icon: <ListAlt />, path: "/reservations" },
-    {
-      name: "Reservation histories",
-      icon: <ListAlt />,
-      path: "/reservationHistories"
-    }
-    // { name: "Reservations",
-    //   icon: <ListAlt />,
-    //   children: [
-    //     { name: "Active", icon: <Domain /> },
-    //     { name: "Companies", icon: <Domain /> }
-    //   ]
-    // },
-  ];
-
-  
-  const path = () => {
-   history.push('', '/cars')
-  }
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <div className={classes.root}>
@@ -205,14 +167,23 @@ export default function Dashboard({ children, match, container, history }) {
         <Divider />
         <List>
         <Link            
-            key="locations"
-            to="/cars"
+            key="cars"
+            to="/"
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
           >
-
       <ListItem button key="locations" >
             <ListItemIcon ><Room/></ListItemIcon>
             <ListItemText>cars</ListItemText>
+          </ListItem>
+          </Link>
+          <Link            
+            key="locations"
+            to="/locations"
+            style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
+          >
+      <ListItem button key="locations" >
+            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemText>Locations</ListItemText>
           </ListItem>
           </Link>
         </List>

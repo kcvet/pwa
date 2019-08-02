@@ -32,3 +32,298 @@
   }
 }
 
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* .login-background {
+  background-image: url('./assets/images/avant2go.jpg');
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  background-size: cover;
+  opacity: 0.5;
+} */
+
+.login-background {
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  /* position: relative; */
+}
+
+
+.login-slanted {
+  background-color: #0067b6;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 35%, 0 52%);
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 52%);
+}
+
+.topdiv {
+  height: 240px;
+  display: block;
+  background-color: #000;
+  color: #ddd;
+  padding-top: 25px;
+  text-align: center;
+  box-sizing: border-box;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.login-header {
+  position: relative;
+  height: 30vh;
+  /* height: 300px; */
+  background-image: linear-gradient(#0067b6, #0067b6);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 75%);
+  /* change the calc height to a percentage height to get alternate responsive behavior*/
+}
+
+/* h1 {
+  margin: 0;
+  padding: 100px 0;
+  font: 44px "Arial";
+  color: white;
+  text-align: center;
+} */
+
+.login-form-shadow {
+  -webkit-box-shadow: 0px 0px 16px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 16px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 16px 1px rgba(0, 0, 0, 0.75);
+}
+
+.login-avatar-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.drawer-paper-shadow {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.swal2-popup {
+  border-radius: 0 !important;
+}
+
+.ReactTable {
+  border: none !important;
+  -webkit-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.25);
+}
+
+.ReactTable .rt-thead {
+  height: 50px;
+  /* box-shadow: inset 0 0px 0 0 rgba(0, 0, 0, 0.6); */
+}
+
+.ReactTable .-filters {
+  height: auto !important;
+  /* box-shadow: inset 0 0px 0 0 rgba(0, 0, 0, 0.6); */
+}
+
+.ReactTable .rt-th {
+  margin: auto;
+}
+
+.ReactTable .rt-tbody .rt-td {
+  margin: auto;
+}
+
+/* The Overlay (background) */
+.overlay {
+  /* Height & width depends on how you want to reveal the overlay (see JS below) */
+  height: 100%;
+  width: 100%;
+  position: fixed; /* Stay in place */
+  z-index: 1090; /* Sit on top */
+  left: 0;
+  top: 0;
+  /* background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0, 0.4); 
+  overflow-x: hidden; 
+  transition: 0.5s;  */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+  position: relative;
+  top: 35%; /* 25% from the top */
+  width: 100%; /* 100% width */
+  text-align: center; /* Centered text/links */
+  margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-36 {
+  font-size: 36px;
+}
+.material-icons.md-48 {
+  font-size: 48px;
+}
+
+.toast-success {
+  background-color: #43a047 !important;
+}
+.toast-error {
+  background-color: #d32f2f !important;
+}
+.toast-warning {
+  background-color: #ffa000 !important;
+}
+.toast-info {
+  background-color: #1976d2 !important;
+}
+
+.box {
+  width:70%;
+  height:200px;
+  background:#61dafb;
+  margin:40px auto;
+}
+
+
+.leaflet-container {
+  width: 100%;
+  height: 500px !important;
+  border-radius: 6px;
+  /* height: 250px; */
+}
+
+#notfound {
+  position: relative;
+  height: 100vh;
+}
+
+#notfound .notfound {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.notfound {
+  max-width: 767px;
+  width: 100%;
+  line-height: 1.4;
+  padding: 0px 15px;
+}
+
+.notfound .notfound-404 {
+  position: relative;
+  height: 150px;
+  line-height: 150px;
+  margin-bottom: 25px;
+}
+
+
+.notfound h2 {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.notfound p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0px;
+  text-transform: uppercase;
+}
+
+.notfound a {
+  font-family: 'Titillium Web', sans-serif;
+  display: inline-block;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  background: #5c91fe;
+  padding: 10px 40px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 1px;
+  margin-top: 15px;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.notfound a:hover {
+  opacity: 0.8;
+}
+
+.shadow	{box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;}
+.shadow-md	{box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;}
+.shadow-lg	{box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;}
+.shadow-xl	{box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;}
+.shadow-2xl	{box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;}
+.shadow-inner	{box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06) !important;}
+.shadow-outline	{box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5) !important;}
+.shadow-none	{box-shadow: none;}
+
+@media only screen and (max-width: 767px) {
+  .notfound .notfound-404 {
+    height: 110px;
+    line-height: 110px;
+  }
+  .notfound .notfound-404 h1 {
+    font-size: 120px;
+  }
+}
+
+.MuiFormLabel-root {
+  color: hsl(0,0%,50%) !important;
+}

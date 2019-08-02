@@ -1,7 +1,8 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { lighten, makeStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -21,7 +22,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios'
 import Image from 'material-ui-image'
-import screen from './../utils/windowsDimensions'
+import screen from '../../utils/windowsDimensions'
+import AddIcon from '@material-ui/icons/Add';
+import {Link} from "react-router-dom";
+
 
 
 function desc(a, b, orderBy) {
@@ -66,6 +70,8 @@ const headRows = [
   { id: 'reservedCars', numeric: false, disablePadding: false, label: 'reservedCars' },
   { id: 'status', numeric: false, disablePadding: false, label: 'status' },
   { id: 'city', numeric: true, disablePadding: false, label: 'city' },
+  { id: 'buttons', numeric: false, disablePadding: false, label: 'buttons' },
+
   
 ];
 
@@ -89,7 +95,7 @@ function EnhancedTableHead(props) {
           />
         </TableCell>
         {headRows.map(row => (
-          ['mainImageResource', 'carModelID.typeOfFuel', 'carModelID.range', 'carModelID.name'].includes(row.id) && width < 769 ? null : 
+          ['mainImageResource','reservedCars', 'reservableCars', 'city', 'status'].includes(row.id) && width < 769 ? null : 
           <TableCell
             key={row.id}
             align={row.numeric ? 'center' : 'left'}
@@ -145,6 +151,12 @@ const useToolbarStyles = makeStyles(theme => ({
   },
   redBackGround: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+  },
+  fab: {
+    margin: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
   }
 }));
 
@@ -211,7 +223,8 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-export default function EnhancedTable() {
+const EnhancedTable  = props => {
+  
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('licencePlate');
@@ -222,15 +235,25 @@ export default function EnhancedTable() {
   const [rows, setLocations] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const { height, width } = screen();
+  const key = localStorage.getItem("token");
 
   
   useEffect(()=> {
   const fetchCarData = async () => { 
   try {
-      const result = await axios('https://api.avant2go.com/api/locations')
+      const carID = props.match.params.carid;
+      console.log('carID: ', carID);
+      console.log('adada', `http://localhost:9000/api/cars/${carID}/damages`);
+      const result = await axios(`http://localhost:9000/api/cars/${carID}/damages`,{
+        headers: {
+          authorization: `Bearer ${key}`
+        }
+      });
+      
+      console.log('const result : ', result.data);
       setLocations(result.data);
-      console.log('result.data: ', result.data);
   } catch (error) {
+    console.log('error: ', error);
   //notifyError("Error when getting cars. Please refresh the page");
   }
 
@@ -320,14 +343,14 @@ export default function EnhancedTable() {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row._id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row._id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
+                      <TableCell padding="checkbox"  onClick={event => handleClick(event, row._id)}
+>
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
@@ -336,13 +359,23 @@ export default function EnhancedTable() {
                       {width > 768 ?  <TableCell align="center">
                       <Image src={row.mainImageResource.href}/>
                       </TableCell> : null}
-                      {width > 768 ?  <TableCell component="th" id={row._id} scope="row" padding="none" size="small">
+                    <TableCell component="th" id={row._id} scope="row" padding="none" size="small">
                         {row.name}
-                      </TableCell> : null}
-                      <TableCell align="center">{row.reservableCars}</TableCell>
-                      <TableCell align="center">{row.reservedCars}</TableCell>
+                      </TableCell>
+                      {width > 768 ?  <TableCell align="center">{row.reservableCars}</TableCell> : null}
+                      {width > 768 ? <TableCell align="center">{row.reservedCars}</TableCell> : null}
                       {width > 768 ? <TableCell align="center">{row.status}</TableCell> : null}
                       {width > 768 ? <TableCell align="center">{row.address.city}</TableCell> : null}
+                      <TableCell align="center">      
+                      <Link            
+                        key="locations"
+                        to={"/locations/edit/"+row._id}
+                        style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}>
+                          <Fab size="small" color="secondary" aria-label="edit" className={classes.fab}>
+                          <AddIcon />
+                      </Fab></Link>
+                      </TableCell>
+
                     </TableRow>
                   );
                 })}
@@ -379,3 +412,5 @@ export default function EnhancedTable() {
     </div>
   );
 }
+
+export default EnhancedTable;

@@ -13,8 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import ReactPaginate from 'react-paginate';
-import './pagination.css'
 
 function MadeWithLove() {
   return (
@@ -49,6 +47,7 @@ const useStyles = makeStyles(theme => ({
   },
   cardMedia: {
     paddingTop: '56.25%', // 16:9
+    height: 0
   },
   cardContent: {
     flexGrow: 1,
@@ -60,8 +59,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function Album(cars) {
-  console.log('cars: ', cars);
+const Album = (damages) =>  {
+  console.log('cars: ', damages);
   const classes = useStyles();
 
   return (
@@ -76,35 +75,24 @@ export default function Album(cars) {
         </Toolbar>
       </AppBar>
       <main>
-      <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
         <Container className={classes.cardGrid} maxWidth="lg">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cars.cars.map(card => (
+            {damages.cars.map(card => (
               <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image={card.carModelID.mainImageResource.href}
-                    title={card.carModelID.mainImageResource.title}
+                    image={card.images.href}
+                    title={card.images.severity}
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {card.plateNumber}
+                      {card.severity}
                     </Typography>
                     <Typography>
-                     status: {card.status}<br></br>
-                     condition: {card.condition}
+                     reportType: {card.reportType}<br></br>
+                     damageDescription: {card.damageDescription}
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -119,6 +107,16 @@ export default function Album(cars) {
               </Grid>
             ))}
           </Grid>
+          <Link to={'http://localhost:9000/api/cars/'+damages.carID+'/newDamage'}>
+          <Button
+              type="button"
+              variant="contained"
+              color="primary"
+              aria-label="Add"
+              >
+               Add Damage
+              </Button>
+             </Link>
         </Container>
       </main>
       {/* Footer */}
@@ -126,3 +124,5 @@ export default function Album(cars) {
     </React.Fragment>
   );
 }
+
+export default Album;
