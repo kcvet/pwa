@@ -73,7 +73,7 @@ const Album = (damages) =>  {
         <Toolbar>
           <CameraIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
-            Album layout
+            Car Dammages
           </Typography>
         </Toolbar>
       </AppBar>
@@ -87,15 +87,13 @@ const Album = (damages) =>  {
                   <CardMedia
                     className={classes.cardMedia}
                     image={card.images.href}
-                    title={card.images.severity}
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {card.severity}
                     </Typography>
                     <Typography>
-                     reportType: {card.reportType}<br></br>
-                     damageDescription: {card.damageDescription}
+                     {card.damageDescription}
                     </Typography>
                   </CardContent>
                   <CardActions>

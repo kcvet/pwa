@@ -42,10 +42,10 @@ export const isAuthenticated = () => {
     }
   };
   
-  export const logOut = ({history}) => {
+  export const logOut = (history) => {
     console.log('history: ', history);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    history.push("/login");
+    //history.push("/login");
   };
   

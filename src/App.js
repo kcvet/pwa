@@ -4,7 +4,7 @@ import './App.css';
 import { Route, Switch } from "react-router-dom";
 import Dashboard from './components/Dashboard'
 import PrivateRoute from './utils/PrivateRoute'
-import Table from './components/Table'
+import Table from './components/Cars/Table'
 import Locations from './components/Locations/LocationList';
 import LocationsEdit from './components/Locations/Edit';
 import DamagesAdd from './components/Damages/Add';

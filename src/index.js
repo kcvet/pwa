@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import { createBrowserHistory } from "history";
 import { BrowserRouter as Router } from "react-router-dom";
-import Dashboard from './components/Dashboard';
 
 const history = createBrowserHistory();
 

@@ -88,14 +88,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'Select all desserts' }}
-          />
-        </TableCell>
         {headRows.map(row => (
           ['mainImageResource','reservedCars', 'reservableCars', 'city', 'status'].includes(row.id) && width < 769 ? null : 
           <TableCell
@@ -339,17 +331,10 @@ export default function EnhancedTable() {
                       key={row._id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox"  onClick={event => handleClick(event, row._id)}
->
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
                       {width > 768 ?  <TableCell align="center">
                       <Image src={row.mainImageResource.href}/>
                       </TableCell> : null}
-                    <TableCell component="th" id={row._id} scope="row" padding="none" size="small">
+                    <TableCell component="th" id={row._id} scope="row" padding="3em" size="small">
                         {row.name}
                       </TableCell>
                       {width > 768 ?  <TableCell align="center">{row.reservableCars}</TableCell> : null}

@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
     }),
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 0,
   },
   menuButtonHidden: {
     display: 'none',
@@ -145,11 +145,17 @@ export default function Dashboard({ children, history }) {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
+          <Link            
+            key="login"
+            to="/login"
+            style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
+          >
           <IconButton color="inherit" onClick={logOut}>
-            <Badge badgeContent={3} color="secondary">
+            <Badge badgeContent={0} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer

@@ -21,10 +21,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios'
 import Image from 'material-ui-image'
-import screen from './../utils/windowsDimensions'
+import screen from '../../utils/windowsDimensions'
 import {Link} from "react-router-dom";
+import dialog from "../dialog"
 
-const { PWA_API } = require("../utils/PWA_API");
+const { PWA_API } = require("../../utils/PWA_API");
 
 
 function desc(a, b, orderBy) {
@@ -84,14 +85,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'Select all desserts' }}
-          />
-        </TableCell>
         {headRows.map(row => (
           ['mainImageResource', 'carModelID.typeOfFuel', 'carModelID.range', 'carModelID.name'].includes(row.id) && width < 769 ? null : 
           <TableCell
@@ -125,7 +118,7 @@ EnhancedTableHead.propTypes = {
 
 const useToolbarStyles = makeStyles(theme => ({
   root: {
-    paddingLeft: theme.spacing(2),
+    paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
   },
   highlight:
@@ -225,8 +218,16 @@ export default function EnhancedTable() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setCars] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const { height, width } = screen();
+  const { width } = screen();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   
   useEffect(()=> {
   const fetchCarData = async () => { 
@@ -257,22 +258,13 @@ export default function EnhancedTable() {
     setSelected([]);
   }
 
-  function handleClick(event, name) {
+  function handleClick(event, name, row) {
+    setOpen(true)
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
+    newSelected[0] = name;
+    console.log('newSelected: ', newSelected);
+    console.log(selected)
 
     setSelected(newSelected);
   }
@@ -285,11 +277,6 @@ export default function EnhancedTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   }
-
-  function handleChangeDense(event) {
-    setDense(event.target.checked);
-  }
-
   const isSelected = name => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -323,23 +310,17 @@ export default function EnhancedTable() {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row._id)}
+                      onClick={event => handleClick(event, row._id, row)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row._id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
                       {width > 768 ?  <TableCell align="center">
                       <Image src={row.carModelID.mainImageResource.href}/>
                       </TableCell> : null}
-                      {width > 768 ?  <TableCell component="th" id={row._id} scope="row" padding="none" size="small">
+                      {width > 768 ?  <TableCell component="th" id={row._id} scope="row" padding="default" size="small">
                         {row.carModelID.name}
                       </TableCell> : null}
                       <TableCell align="center">{row.plateNumber}</TableCell>
@@ -390,6 +371,7 @@ export default function EnhancedTable() {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
+        <dialog open={open} handleClose={handleClose}/>
       </Paper>
     </div>
   );

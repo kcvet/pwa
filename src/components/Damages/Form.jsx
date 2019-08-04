@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { updateCollection } from "../../actions/common";
-import { notifySuccess, notifyError } from "../toast/Toast";import {
-
+import { notifySuccess, notifyError } from "../toast/Toast";
+import {
   Grid,
   Paper,
   Box,
@@ -111,7 +111,7 @@ const LocationForm = props => {
                     label="damage Description"
                     placeholder="e.g. left front door is scratched"
                     className={classes.textField}
-                    value={values.damageDescription}
+                    //value={values.damageDescription}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     multiline
@@ -145,55 +145,21 @@ const LocationForm = props => {
                         accept="image/*"
                         className={classes.input}
                         style={{ display: 'none' }}
-                        id="raised-button-file"
+                        id="images.content"
+                        name="images.content"
+                        label="images.content"
                         multiple
+                        base-sixty-four-input
                         type="file"
                       />
-                      <label htmlFor="raised-button-file">
-                        <Button variant="raised" component="span" className={classes.button}>
+                      <label htmlFor="images.content">
+                        <Button variant="outlined" component="span" className={classes.button}>
                           Upload
                         </Button>
                       </label> 
                   </Grid>
                 </Grid>
           
-
-              {/*********************************** Additional Image Resources *****************************/}
-
-              <Grid item xs={12} md={6}>
-                <Box xs={12}>
-                  <h2 style={{ fontWeight: "lighter" }}>
-                    Image resources
-                  </h2>
-                </Box>
-                <Grid container>
-                  <Grid item xs={12} md={12}>
-                    <Grid container spacing={3}>
-                    <FieldArray
-                    name="additionalImageResources"
-                    render={arrayHelpers => (
-                      <div>
-                        <Box pt={4}>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={() =>
-                              arrayHelpers.push({
-                                title: undefined,
-                                href: undefined
-                              })
-                            }
-                          >
-                            + Add image
-                          </Button>
-                        </Box>
-                      </div>
-                    )}
-                  />
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
             </Grid>
             <div className={classes.divIcon}>
               <Button

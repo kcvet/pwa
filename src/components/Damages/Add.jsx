@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Container } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import { Formik } from "formik";
 import axios from "axios";
 import Spinner from "../spinner/Spinner";
 import ValidationDamagesSchema from "./ValidationDamagesSchema";
-import LocationForm from "./Form";
 import { newCollection } from "../../actions/common";
 import { notifySuccess, notifyError } from "../toast/Toast";
+import {
+  Grid,
+  Paper,
+  Box,
+  Button,
+  InputAdornment,
+  TextField,
+  Form
+} from "@material-ui/core";
+import {
+  Store,
+} from "@material-ui/icons";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -51,16 +62,88 @@ const LocationEdit = props => {
     return (
       <div>
         <Container>
-          <Formik
-            render={props => <LocationForm {...props} />}
-             //initialValues={locationData}
-            //validationSchema={ValidationLocationSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              console.log('values: ', values);
-              handleSubmit(values);
-              setSubmitting(false);
-            }}
-          />
+          <div className={classes.root}>
+      <Paper>
+        <Box p={2} mb={5}>
+          <form
+            className={classes.container}
+            autoComplete="off"
+            onSubmit={handleSubmit}
+          >
+            <Grid container spacing={3}>
+              {/*********************************** Info ************************************/}
+
+            
+              <Grid item xs={12} md={6}>
+                <Box xs={12}>
+                  <h2 style={{ fontWeight: "lighter" }}>Info</h2>
+                </Box>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    id="damageDescription"
+                    name="damageDescription"
+                    label="damage Description"
+                    placeholder="e.g. left front door is scratched"
+                    className={classes.textField}
+                    multiline
+                    rowsMax="4"
+                    margin="normal"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Store />
+                        </InputAdornment>
+                      )
+                    }}
+                    required
+                  />
+                </Grid>
+              </Grid>
+
+              {/*********************************** Main Image Resource ************************************/}
+
+            
+                <Grid item xs={12} md={6}>
+                  <Box xs={12}>
+                    <h2 style={{ fontWeight: "lighter" }}>
+                      Main Image Resource
+                    </h2>
+                  </Box>
+                  <Grid item xs={12} md={6}>
+                  <input
+                        accept="image/*"
+                        className={classes.input}
+                        style={{ display: 'none' }}
+                        id="images.content"
+                        name="images.content"
+                        label="images.content"
+                        multiple
+                        base-sixty-four-input
+                        type="file"
+                      />
+                      <label htmlFor="images.content">
+                        <Button variant="outlined" component="span" className={classes.button}>
+                          Upload
+                        </Button>
+                      </label> 
+                  </Grid>
+                </Grid>
+          
+            </Grid>
+            <div className={classes.divIcon}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                aria-label="Add"
+              >
+               Add Damage
+              </Button>
+            </div>
+          </form>
+        </Box>
+      </Paper>
+    </div> 
         </Container>
       </div>
     );
@@ -68,3 +151,14 @@ const LocationEdit = props => {
 };
 
 export default LocationEdit;
+
+         /*<Formik
+            render={props => <Form {...props} />}
+             //initialValues={locationData}
+            //validationSchema={ValidationLocationSchema}
+            onSubmit={(values, { setSubmitting }) => {
+              console.log('values: ', values);
+              handleSubmit(values);
+              setSubmitting(false);
+            }}
+          /> */
