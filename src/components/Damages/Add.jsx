@@ -3,13 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Container } from "@material-ui/core";
 import { Formik } from "formik";
 import axios from "axios";
-import Spinner from "../../components/spinner/Spinner";
-import ValidationLocationSchema from "./ValidationLocationSchema";
+import Spinner from "../spinner/Spinner";
+import ValidationDamagesSchema from "./ValidationDamagesSchema";
 import LocationForm from "./Form";
-import { updateCollection } from "../../actions/common";
-import { notifySuccess, notifyError } from "../../components/toast/Toast";
-
-const { PWA_API } = require("../../utils/PWA_API")
+import { newCollection } from "../../actions/common";
+import { notifySuccess, notifyError } from "../toast/Toast";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -35,41 +33,27 @@ const useStyles = makeStyles(theme => ({
 
 const LocationEdit = props => {
   const classes = useStyles();
-  const locationID = props.match.params.id;
+  const carID = props.match.params.carid;
   const [locationData, setLocationData] = useState({});
-
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        const result = await axios(`${PWA_API}/api/locations/${locationID}`);
-        setLocationData(result.data);
-      } catch (error) {
-        notifyError("Error when getting location");
-      }
-    };
-    fetchLocationData();
-  }, [locationID]);
-
   const handleSubmit = values => {
     console.log('values: ', values);
-    updateCollection(values._id, values, "locations")
+    console.log('carID: ', carID);
+    newCollection(values, "api/cars/"+carID+"/damages")
       .then(result => {
         notifySuccess("Successfully update location");
-        props.history.push("/locations");
+        props.history.push("/");
       })
       .catch(error => {
         notifyError("Error when trying update location");
       });
   };
 
-  if (locationData._id) {
-    console.log('locationData: ', locationData);
     return (
       <div>
         <Container>
           <Formik
             render={props => <LocationForm {...props} />}
-            initialValues={locationData}
+             //initialValues={locationData}
             //validationSchema={ValidationLocationSchema}
             onSubmit={(values, { setSubmitting }) => {
               console.log('values: ', values);
@@ -80,9 +64,7 @@ const LocationEdit = props => {
         </Container>
       </div>
     );
-  } else {
-    return <Spinner />;
-  }
+
 };
 
 export default LocationEdit;

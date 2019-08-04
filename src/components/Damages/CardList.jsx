@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 
 function MadeWithLove() {
   return (
@@ -56,6 +56,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
   },
+  button: {
+    paddingTop: '5em',
+  }
 }));
 
 
@@ -107,7 +110,7 @@ const Album = (damages) =>  {
               </Grid>
             ))}
           </Grid>
-          <Link to={'http://localhost:9000/api/cars/'+damages.carID+'/newDamage'}>
+          <Link key="new" to={'/cars/'+damages.carID+'/newDamage'}>
           <Button
               type="button"
               variant="contained"

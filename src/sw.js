@@ -12,6 +12,7 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
+const PWA_API =  "http://localhost:9000" //"https://cautela.serveo.net"//"http://localhost:9000";
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js');
 
@@ -21,6 +22,7 @@ if (workbox) {
   workbox.precaching.precacheAndRoute([]);
 
 } else {
+
   console.log(`Boo! Workbox didn't load 😬`);
 }
 
@@ -28,12 +30,12 @@ if (workbox) {
 
 
 workbox.routing.registerRoute(
-  'http://localhost:9000/api/locations',
+  `${PWA_API}/api/locations`,
   new workbox.strategies.StaleWhileRevalidate()
 );
 
 workbox.routing.registerRoute(
-  'http://localhost:9000/api/cars?populate=["carModelID"]',
+  `${PWA_API}/api/cars?populate=["carModelID"]`,
   new workbox.strategies.StaleWhileRevalidate()
 );
 
@@ -83,7 +85,7 @@ workbox.routing.registerRoute(
     plugins: [
       new workbox.expiration.Plugin({
         // Cache only 20 images.
-        maxEntries: 20,
+        maxEntries: 50,
         // Cache for a maximum of a week.
         maxAgeSeconds: 7 * 24 * 60 * 60,
       })
@@ -91,136 +93,14 @@ workbox.routing.registerRoute(
   })
 );
 
-
-/*
-const FILES_TO_CACHE = [
-  'offline.html',
-];
-const CACHE_NAME = 'static-cache-v1';
-
-console.log("service worker waking up")
-
-
-self.addEventListener('activate', function(event) {
-  console.log('Claiming control');
-  event.waitUntil(self.clients.claim());
-  });
-
-
-self.addEventListener('install', (evt) => { 
-  console.log('[ServiceWorker] Install');
-  // CODELAB: Precache static resources here.
-  // CODELAB: Precache static resources here.
-  evt.waitUntil(
-      caches.open(CACHE_NAME).then((cache) => {
-        console.log('[ServiceWorker] Pre-caching offline page');
-        return cache.addAll(FILES_TO_CACHE);
-      })
-  );
-  self.skipWaiting();
+const bgSyncPlugin = new workbox.backgroundSync.Plugin('myQueueName', {
+  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
 });
 
-self.addEventListener('activate', function(event) {
-  console.log('Claiming control');
-  event.waitUntil(self.clients.claim());
-  });
-
-
-  self.addEventListener('fetch', (evt) => {
-    console.log('[ServiceWorker] Fetch', evt.request.url);
-    // CODELAB: Add fetch event handler here.
-    
-    // CODELAB: Add fetch event handler here. 
-      if (evt.request.mode !== 'navigate') {
-      // Not a page navigation, bail.
-      return;
-      }
-      evt.respondWith(
-      fetch(evt.request)
-          .catch(() => {
-            console.log("returning Cache")
-            return caches.open(CACHE_NAME)
-                .then((cache) => {
-                  return cache.match('offline.html');
-                });
-          })
-      );
-  
-  });
-
-  
-/*
-'use strict';
-
-const FILES_TO_CACHE = [
-  '/offline.html',
-];
-const CACHE_NAME = 'static-cache-v1';
-
-console.log("service worker waking up")
-
-
-self.addEventListener('activate', function(event) {
-  console.log('Claiming control');
-  event.waitUntil(self.clients.claim());
-  });
-
-
-self.addEventListener('install', (evt) => { 
-  console.log('[ServiceWorker] Install');
-  // CODELAB: Precache static resources here.
-  // CODELAB: Precache static resources here.
-  evt.waitUntil(
-      caches.open(CACHE_NAME).then((cache) => {
-        console.log('[ServiceWorker] Pre-caching offline page');
-        return cache.addAll(FILES_TO_CACHE);
-      })
-  );
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', (evt) => {
-  console.log('[ServiceWorker] Activat6e kr nmeki');
-  // CODELAB: Remove previous cached data from disk.
-  evt.waitUntil(
-      caches.keys().then((keyList) => {
-        return Promise.all(keyList.map((key) => {
-          if (key !== CACHE_NAME) {
-            console.log('[ServiceWorker] Removing old cache', key);
-            return caches.delete(key);
-          }
-        }));
-      })
-  );
-  self.clients.claim();
-});
-
-self.addEventListener('fetch', (evt) => {
-  console.log('[ServiceWorker] Fetch', evt.request.url);
-  // CODELAB: Add fetch event handler here.
-  
-  // CODELAB: Add fetch event handler here. 
-    if (evt.request.mode !== 'navigate') {
-    // Not a page navigation, bail.
-    return;
-    }
-    evt.respondWith(
-    fetch(evt.request)
-        .catch(() => {
-          return caches.open(CACHE_NAME)
-              .then((cache) => {
-                return cache.match('offline.html');
-              });
-        })
-    );
-
-});
-
-export function unregister() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.unregister();
-    });
-  }
-}
-*/
+workbox.routing.registerRoute(
+  /\/api\/.*\/*.json/,
+  new workbox.strategies.NetworkOnly({
+    plugins: [bgSyncPlugin]
+  }),
+  'POST'
+);

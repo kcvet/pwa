@@ -76,6 +76,8 @@
     "start": "node scripts/start.js",
     "copy": "copyfiles -u 1 src/**/**/* src/**/* src/* build",
     "build": "npm run copy && workbox injectManifest workbox-config.js && node scripts/start.js",
+    "ngrook": "set PWA_API=https://8ee6c8dd.ngrok.io && npm run copy && workbox injectManifest workbox-config.js && node scripts/start.js",
+
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

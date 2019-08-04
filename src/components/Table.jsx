@@ -24,6 +24,7 @@ import Image from 'material-ui-image'
 import screen from './../utils/windowsDimensions'
 import {Link} from "react-router-dom";
 
+const { PWA_API } = require("../utils/PWA_API");
 
 
 function desc(a, b, orderBy) {
@@ -230,7 +231,7 @@ export default function EnhancedTable() {
   useEffect(()=> {
   const fetchCarData = async () => { 
   try {
-      const result = await axios('http://localhost:9000/api/cars?populate=["carModelID"]')
+      const result = await axios(`${PWA_API}/api/cars?populate=["carModelID"]`)
       setCars(result.data);
   } catch (error) {
   //notifyError("Error when getting cars. Please refresh the page");

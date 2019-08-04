@@ -26,6 +26,7 @@ import screen from '../../utils/windowsDimensions'
 import AddIcon from '@material-ui/icons/Add';
 import {Link} from "react-router-dom";
 
+const { PWA_API } = require("../../utils/PWA_API");
 
 
 function desc(a, b, orderBy) {
@@ -243,8 +244,8 @@ const EnhancedTable  = props => {
   try {
       const carID = props.match.params.carid;
       console.log('carID: ', carID);
-      console.log('adada', `http://localhost:9000/api/cars/${carID}/damages`);
-      const result = await axios(`http://localhost:9000/api/cars/${carID}/damages`,{
+      console.log('adada', `${PWA_API}/api/cars/${carID}/damages`);
+      const result = await axios(`${PWA_API}/api/cars/${carID}/damages`,{
         headers: {
           authorization: `Bearer ${key}`
         }

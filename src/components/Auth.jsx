@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { PWA_API } = require("../utils/PWA_API")
 
 export const isAuthenticated = () => {
     const key = localStorage.getItem("token");
@@ -14,11 +15,12 @@ export const isAuthenticated = () => {
   
   export const login = async (password, email) => {
     try {
-      const { data } = await axios.post(`http://localhost:9000/auth/local`, {
+      console.log(`${PWA_API}/auth/local`)
+      const { data } = await axios.post(`${PWA_API}/auth/local`, {
           password,
           email
         });
-      const userData = await axios.get(`http://localhost:9000/api/users/me`, {
+      const userData = await axios.get(`${PWA_API}/api/users/me`, {
         headers: {
           authorization: `Bearer ${data.token}`
         }

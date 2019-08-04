@@ -27,6 +27,8 @@ import AddIcon from '@material-ui/icons/Add';
 import {Link} from "react-router-dom";
 
 
+const { PWA_API } = require("../../utils/PWA_API");
+
 
 function desc(a, b, orderBy) {
   const nested = orderBy.split(".")
@@ -239,7 +241,7 @@ export default function EnhancedTable() {
   useEffect(()=> {
   const fetchCarData = async () => { 
   try {
-      const result = await axios('http://localhost:9000/api/locations')
+      const result = await axios(`${PWA_API}/api/locations`)
       setLocations(result.data);
   } catch (error) {
   //notifyError("Error when getting cars. Please refresh the page");

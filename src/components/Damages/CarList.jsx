@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import CardList from './CardList'
 
+const { PWA_API } = require("../../utils/PWA_API");
+
 const handlePageClick = data => {
   let selected = data.selected;
   let offset = Math.ceil(selected * this.props.perPage);
@@ -22,7 +24,7 @@ const DamagesList = props => {
   useEffect(()=> {
     const fetchCarData = async () => { 
     try {
-        const result = await axios(`http://localhost:9000/api/cars/${carID}/damages`,{
+        const result = await axios(`${PWA_API}/api/cars/${carID}/damages`,{
           headers: {
             authorization: `Bearer ${key}`
           }
@@ -38,16 +40,9 @@ const DamagesList = props => {
     fetchCarData();
     }, []);
   
-    if(damages.length > 0){
-      console.log('cars: ', damages);
-      console.log(pageCount)
     return(
         <CardList cars={damages} carID={carID}></CardList>
-    ) } else {
-    return(
-      <div>
-      </div>
-    )}
+    )
 }
 
 export default DamagesList;
