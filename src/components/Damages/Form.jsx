@@ -1,32 +1,18 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { updateCollection } from "../../actions/common";
-import { notifySuccess, notifyError } from "../toast/Toast";
 import {
   Grid,
   Paper,
   Box,
-  Fab,
   Button,
   InputAdornment
 } from "@material-ui/core";
 import {
-  Send,
-  Delete,
-  Code,
   Store,
-  Language,
-  Phone,
-  LocationOn,
-  Home,
-  LocationCity,
-  LocalPostOffice,
-  Flag,
-  Link,
-  Title
 } from "@material-ui/icons";
-import { Field, FieldArray } from "formik";
+import FileBase64 from 'react-file-base64';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -76,9 +62,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LocationForm = props => {
+  
+  const [files, setFiles] = React.useState('');
+
   const classes = useStyles();
   const {
-    values,
     touched,
     errors,
     isSubmitting,
@@ -87,6 +75,11 @@ const LocationForm = props => {
     handleSubmit,
       } = props;
 
+  const getBase64 = file => {
+    setFiles(file.base64);
+    props.values.images = [{content: file.base64}];
+    console.log(' props.values.: ',  props.values);
+  }
   return (
     <div className={classes.root}>
       <Paper>
@@ -141,25 +134,13 @@ const LocationForm = props => {
                     </h2>
                   </Box>
                   <Grid item xs={12} md={6}>
-                  <input
-                        accept="image/*"
-                        className={classes.input}
-                        style={{ display: 'none' }}
-                        id="images.content"
-                        name="images.content"
-                        label="images.content"
-                        multiple
-                        base-sixty-four-input
+                  <FileBase64
                         type="file"
-                      />
-                      <label htmlFor="images.content">
-                        <Button variant="outlined" component="span" className={classes.button}>
-                          Upload
-                        </Button>
-                      </label> 
+                        onDone={ getBase64.bind(this)}
+                         />
                   </Grid>
                 </Grid>
-          
+                    
             </Grid>
             <div className={classes.divIcon}>
               <Button

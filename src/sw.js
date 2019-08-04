@@ -12,7 +12,8 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
-const PWA_API =  "http://localhost:9000" //"https://cautela.serveo.net"//"http://localhost:9000";
+// const PWA_API =  "http://localhost:9000" //"https://cautela.serveo.net"//"http://localhost:9000";
+const PWA_API =  "https://cautela.serveo.net"//
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js');
 
