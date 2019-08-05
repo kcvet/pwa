@@ -25,6 +25,7 @@ import Image from 'material-ui-image'
 import screen from '../../utils/windowsDimensions'
 import AddIcon from '@material-ui/icons/Add';
 import {Link} from "react-router-dom";
+import LocationView from "./ModalDetailView";
 
 
 const { PWA_API } = require("../../utils/PWA_API");
@@ -228,8 +229,17 @@ export default function EnhancedTable() {
   const [rows, setLocations] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const { height, width } = screen();
+  const [open, setOpen] = React.useState(false);
+  const [location, setLocation] = useState({});
 
-  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   useEffect(()=> {
   const fetchCarData = async () => { 
   try {
@@ -258,24 +268,11 @@ export default function EnhancedTable() {
     }
     setSelected([]);
   }
-
-  function handleClick(event, name) {
-    const selectedIndex = selected.indexOf(name);
+  function handleClick(event, name, row) {
+    setLocation(row);
+    setOpen(true)
     let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
+    newSelected[0] = name;
     setSelected(newSelected);
   }
 
@@ -327,6 +324,7 @@ export default function EnhancedTable() {
                       hover
                       role="checkbox"
                       aria-checked={isItemSelected}
+                      onClick={event => handleClick(event, row._id, row)}
                       tabIndex={-1}
                       key={row._id}
                       selected={isItemSelected}
@@ -334,7 +332,7 @@ export default function EnhancedTable() {
                       {width > 768 ?  <TableCell align="center">
                       <Image src={row.mainImageResource.href}/>
                       </TableCell> : null}
-                    <TableCell component="th" id={row._id} scope="row" padding="3em" size="small">
+                    <TableCell component="th" id={row._id} scope="row" padding="default" size="small">
                         {row.name}
                       </TableCell>
                       {width > 768 ?  <TableCell align="center">{row.reservableCars}</TableCell> : null}
@@ -379,6 +377,7 @@ export default function EnhancedTable() {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
+        <LocationView open={open} location={location} onClose={handleClose} />
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}

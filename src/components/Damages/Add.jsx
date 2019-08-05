@@ -30,17 +30,18 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "50px"
   }
 }));
+ 
+
 
 const LocationEdit = props => {
   const carID = props.match.params.carid;
-  console.log('carID: ', carID);
   const handleSubmit = values => {
-    console.log('values: ', values);
+
     newCollection(values, "cars/"+carID+"/damages")
       .then(result => {
-        console.log('result: ', result);
-        notifySuccess("Successfully update location");
+        notifySuccess("Successfully added new damage");
         props.history.push("/");
+
       })
       .catch(error => {
         notifyError("Error when trying update location");
@@ -55,7 +56,6 @@ const LocationEdit = props => {
              //initialValues={locationData}
             //validationSchema={ValidationLocationSchema}
             onSubmit={(values, { setSubmitting }) => {
-              console.log('values: ', values);
               handleSubmit(values);
               setSubmitting(false);
             }}

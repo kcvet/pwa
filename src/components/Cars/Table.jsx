@@ -23,7 +23,7 @@ import axios from 'axios'
 import Image from 'material-ui-image'
 import screen from '../../utils/windowsDimensions'
 import {Link} from "react-router-dom";
-import dialog from "../dialog"
+import CarView from "./ModalDetailView";
 
 const { PWA_API } = require("../../utils/PWA_API");
 
@@ -220,6 +220,8 @@ export default function EnhancedTable() {
   const [rows, setCars] = useState([]);
   const { width } = screen();
   const [open, setOpen] = React.useState(false);
+  const [car, setCar] = useState({});
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -259,13 +261,10 @@ export default function EnhancedTable() {
   }
 
   function handleClick(event, name, row) {
+    setCar(row);
     setOpen(true)
-    const selectedIndex = selected.indexOf(name);
     let newSelected = [];
     newSelected[0] = name;
-    console.log('newSelected: ', newSelected);
-    console.log(selected)
-
     setSelected(newSelected);
   }
 
@@ -335,13 +334,6 @@ export default function EnhancedTable() {
                           <Fab size="small" color="secondary" aria-label="edit" className={classes.fab}>
                           <AddIcon />
                       </Fab></Link>
-                      <Link            
-                        key="carsEdit"
-                        to={"/cars/edit/"+row._id}
-                        style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}>
-                          <Fab size="small" color="secondary" aria-label="edit" className={classes.fab}>
-                          <AddIcon />
-                      </Fab></Link>
                       </TableCell>
                     </TableRow>
                   );
@@ -371,7 +363,7 @@ export default function EnhancedTable() {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
-        <dialog open={open} handleClose={handleClose}/>
+        <CarView open={open} car={car} onClose={handleClose} />
       </Paper>
     </div>
   );

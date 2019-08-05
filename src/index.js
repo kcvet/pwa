@@ -4,12 +4,17 @@ import './index.css';
 import App from './App';
 import { createBrowserHistory } from "history";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import { notifySuccess, notifyError } from "./components/toast/Toast";
 
 const history = createBrowserHistory();
 
     ReactDOM.render(
         <Router history={history}>
-            <App />
+            <div>
+              <App />
+              <ToastContainer />
+            </div>
         </Router>,
         document.getElementById("root")
       );
@@ -24,6 +29,7 @@ const history = createBrowserHistory();
    window.addEventListener('load', () => {
      navigator.serviceWorker.register(swUrl)
          .then((reg) => {
+           notifySuccess("Web application is now ready for offline use")
            console.log('Service worker registered in scope.', reg)
          })
         .catch(function(err) {

@@ -51,7 +51,6 @@ const LocationEdit = props => {
   }, [locationID]);
 
   const handleSubmit = values => {
-    console.log('values: ', values);
     updateCollection(values._id, values, "locations")
       .then(result => {
         notifySuccess("Successfully update location");

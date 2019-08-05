@@ -84,10 +84,15 @@ const Album = (damages) =>  {
             {damages.cars.map(card => (
               <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
                 <Card className={classes.card}>
+                { card.images.length !== 0 ? 
                   <CardMedia
                     className={classes.cardMedia}
-                    image={card.images.href}
-                  />
+                    image={card.images[0].href}
+                /> :  
+                <CardMedia
+                    className={classes.cardMedia}
+                    image
+                /> }
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {card.severity}

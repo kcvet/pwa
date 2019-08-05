@@ -18,8 +18,8 @@ const CustomMessage = ({ message, variant }) => {
 export const notifySuccess = message => {
   toast.success(<CustomMessage message={message} variant="success" />, {
     className: "toast-success",
-    position: "bottom-left",
-    autoClose: 3000,
+    position: "top-right",
+    autoClose: 1500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -30,7 +30,7 @@ export const notifyError = message => {
   toast.error(<CustomMessage message={message} variant="error" />, {
     className: "toast-error",
     position: "bottom-left",
-    autoClose: 3000,
+    autoClose: 1500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -41,7 +41,7 @@ export const notifyInfo = message => {
   toast.info(<CustomMessage message={message} variant="info" />, {
     className: "toast-success",
     position: "bottom-left",
-    autoClose: 3000,
+    autoClose: 1500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -52,7 +52,7 @@ export const notifyWarn = message => {
   toast.warn(<CustomMessage message={message} variant="warn" />, {
     className: "toast-success",
     position: "bottom-left",
-    autoClose: 3000,
+    autoClose: 1500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

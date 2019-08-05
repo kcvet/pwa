@@ -36,6 +36,16 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
+  new RegExp( `${PWA_API}/api/locations/.*`),
+  new workbox.strategies.StaleWhileRevalidate()
+);
+
+workbox.routing.registerRoute(
+  new RegExp( `${PWA_API}/api/cars/.*/damages`),
+  new workbox.strategies.StaleWhileRevalidate()
+);
+
+workbox.routing.registerRoute(
   `${PWA_API}/api/cars?populate=["carModelID"]`,
   new workbox.strategies.StaleWhileRevalidate()
 );
@@ -50,7 +60,7 @@ workbox.routing.registerRoute(
   // Cache CSS files.
   /\.css$/,
   // Use cache but update in the background.
-  new workbox.strategies.StaleWhileRevalidate({
+  new workbox.strategies.CacheFirst({
     // Use a custom cache name.
     cacheName: 'css-cache',
   })
