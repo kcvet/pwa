@@ -59,6 +59,7 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: '#08b539',
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -173,11 +174,21 @@ export default function Dashboard({ children, history }) {
         <Divider />
         <List>
         <Link            
-            key="cars"
-            to="/"
+            key="user"
+            to="/users/me"
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
           >
-      <ListItem button key="locations" >
+      <ListItem button key="user" >
+            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemText>profile</ListItemText>
+          </ListItem>
+          </Link>
+          <Link            
+            key="cars"
+            to="/cars"
+            style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
+          >
+      <ListItem button key="cars" >
             <ListItemIcon ><Room/></ListItemIcon>
             <ListItemText>cars</ListItemText>
           </ListItem>
@@ -190,6 +201,16 @@ export default function Dashboard({ children, history }) {
       <ListItem button key="locations" >
             <ListItemIcon ><Room/></ListItemIcon>
             <ListItemText>Locations</ListItemText>
+          </ListItem>
+          </Link>
+          <Link            
+            key="damages"
+            to="/cars/damages"
+            style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
+          >
+      <ListItem button key="damages" >
+            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemText>Damages</ListItemText>
           </ListItem>
           </Link>
         </List>

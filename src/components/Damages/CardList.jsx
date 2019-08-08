@@ -58,6 +58,9 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     paddingTop: '5em',
+  },
+  green: {
+    backgroundColor: '#08b539',
   }
 }));
 
@@ -70,10 +73,10 @@ const Album = (damages) =>  {
     <React.Fragment>
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar>
+        <Toolbar  className={classes.green} >
           <CameraIcon className={classes.icon} />
           <Typography variant="h6" color="inherit" noWrap>
-            Car Dammages
+            Car damages
           </Typography>
         </Toolbar>
       </AppBar>

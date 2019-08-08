@@ -12,10 +12,10 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
-// const PWA_API =  "http://localhost:9000" //"https://cautela.serveo.net"//"http://localhost:9000";
-const PWA_API =  "https://cautela.serveo.net"//
+ const PWA_API =  "http://localhost:9000" //"https://cautela.serveo.net"//"http://localhost:9000";
+// const PWA_API =  "https://cautela.serveo.net"//
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js');
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
 if (workbox) {
   console.log(`Yay! Workbox is loaded 🎉`);
@@ -36,6 +36,12 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
+  new RegExp( `${PWA_API}/api/users.*`),
+  new workbox.strategies.StaleWhileRevalidate()
+);
+
+
+workbox.routing.registerRoute(
   new RegExp( `${PWA_API}/api/locations/.*`),
   new workbox.strategies.StaleWhileRevalidate()
 );
@@ -46,7 +52,7 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  `${PWA_API}/api/cars?populate=["carModelID"]`,
+  `${PWA_API}/api/cars?populate=["carModelID", "locationID"]`,
   new workbox.strategies.StaleWhileRevalidate()
 );
 
@@ -104,14 +110,53 @@ workbox.routing.registerRoute(
   })
 );
 
-const bgSyncPlugin = new workbox.backgroundSync.Plugin('myQueueName', {
+const bgSyncPlugin = new workbox.backgroundSync.Plugin('PUT', {
   maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
 });
 
+const POSTbgSyncPlugin = new workbox.backgroundSync.Plugin('POST', {
+  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
+});
+
+
+/*
+workbox.routing.registerRoute(function(routeData) {
+  return (routeData.event.request.headers.get('accept').includes('text/html'));
+}, function(args) {
+  return caches.match(args.event.request)
+    .then(function (response) {
+      if(response) {
+        return response;
+      } else {
+        return fetch(args.event.request)
+          .then(function(res) {
+            return caches.open('dynamic')
+              .then(cache.put(args.event.request.url, res.clone()));
+              return res;
+          })
+          .catch(function (err) {
+            return caches.match('/offline.html')
+              .then(function (res) {
+                return res;
+              })
+          })
+      }
+    })
+})
+*/
 workbox.routing.registerRoute(
-  /\/api\/.*\/*.json/,
-  new workbox.strategies.NetworkOnly({
+  /https:\/\/cautela.serveo.net\/api\/.*/,
+    new workbox.strategies.NetworkOnly({
     plugins: [bgSyncPlugin]
+  }),
+  'PUT'
+);
+
+
+workbox.routing.registerRoute(
+  /https:\/\/cautela.serveo.net\/api\/.*/,  
+  new workbox.strategies.NetworkOnly({
+    plugins: [POSTbgSyncPlugin]
   }),
   'POST'
 );

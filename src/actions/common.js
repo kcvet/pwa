@@ -1,4 +1,6 @@
 import axios from "axios";
+import Notify from '../utils/Notification';
+import { notifySuccess, notifyError } from "../components/toast/Toast";
 const { PWA_API } = require("../utils/PWA_API");
 
 export function prepareHeaders(method) {
@@ -8,7 +10,6 @@ export function prepareHeaders(method) {
   // token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1NmIwODRiNjIwNWU0MDZlNjI4M2M0ZGIiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE1NjQ3MzYxNzN9.PuC4QEWnkhlNg26zMp0hMdZDiJOAeTo26GHbW1in7bU'
   if (["POST", "PUT"].includes(method)) headers["Content-Type"] = "application/json";
   if (user && token) headers.Authorization = `Bearer ${token}`;
-  console.log('headers: ', headers);
   return headers;
 }
 
@@ -20,8 +21,10 @@ export const newCollection = async(data, endpoint)  => {
       headers: prepareHeaders("POST"),
       data
     })
+      Notify("Successfully created new collection",  notifySuccess("Successfully created new collection"))
       return response.data
   } catch (error) {
+    Notify("Error when trying to create a new collection", notifyError("Error when trying to create a new collection"))
     return error
   }
 }
@@ -45,9 +48,6 @@ export const getCollection = async(endpoint, filter)  => {
 export const updateCollection = async(id, data, endpoint)  => {
   delete data._v
   delete data.created
-  console.log('data: ', data);
-  console.log('URL: ',`${PWA_API}/${endpoint}/${id}`,);
-
   try {
     let response = await axios({
       method: "put",
@@ -55,9 +55,10 @@ export const updateCollection = async(id, data, endpoint)  => {
       headers: prepareHeaders("PUT"),
       data,
     })
+      Notify("Successfully updated collection",  notifySuccess("Successfully updated collection"))
       return response.data
   } catch (error) {
-    console.log("fuckity fuck", error)
+    Notify("Error when trying to update collection", notifyError("Error when trying to update collection"))
     return error
   }
 }

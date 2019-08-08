@@ -24,12 +24,14 @@ const DamagesList = props => {
   useEffect(()=> {
     const fetchCarData = async () => { 
     try {
-        const result = await axios(`${PWA_API}/api/cars/${carID}/damages`,{
-          headers: {
-            authorization: `Bearer ${key}`
-          }
-        });
-        
+    console.log("props", props)
+      let api = `${PWA_API}/api/cars/${carID}/damages`
+      if (props.all) api = `${PWA_API}/api/cars/damages`
+      const result = await axios(api,{
+        headers: {
+          authorization: `Bearer ${key}`
+        }
+      });
         setDamages(result.data);
     } catch (error) {
       console.log('error: ', error);

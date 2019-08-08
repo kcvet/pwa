@@ -62,18 +62,10 @@ class GoogleMapsContainer extends React.Component {
       >
         <Marker
           onClick = { this.onMarkerClick }
-          title = { 'Changing Colors Garage' }
+          title = { this.props.address }
           position = {{ lat: this.props.lat, lng: this.props.lng }}
-          name = { 'Changing Colors Garage' }
+          name = { this.props.name }
         />
-        { navigator.geolocation  ? 
-            <Marker
-            onClick = { this.onMarkerClick }
-            title = { 'My position' }
-            position = {{ lat: navigator.geolocation.getCurrentPosition(this.latitude), lng:  navigator.geolocation.getCurrentPosition(this.longitude) }}
-            name = { 'You are here' }
-            /> : null
-      }
         <InfoWindow
           marker = { this.state.activeMarker }
           visible = { this.state.showingInfoWindow }
@@ -83,13 +75,12 @@ class GoogleMapsContainer extends React.Component {
               variant = 'h6'
               component = 'h6'
             >
-              Changing Colors Garage
+             { this.props.name }
             </Typography>
             <Typography
               component = 'p'
             >
-              98G Albe Dr Newark, DE 19702 <br />
-              302-293-8627
+            { this.props.address }
             </Typography>
           </Paper>
         </InfoWindow>
@@ -98,5 +89,5 @@ class GoogleMapsContainer extends React.Component {
   }
 }
 export default GoogleApiWrapper({
-    api: ('AIzaSyD6kRzcDu5g42W62b8kHkKj0Lap6dlj6DU')
+    api: ('AIzaSyDqrwD2Ru6W_WoxM2fYTJm20vhqFYqode4')
 })(GoogleMapsContainer)

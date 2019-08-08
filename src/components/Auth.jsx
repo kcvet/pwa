@@ -15,7 +15,6 @@ export const isAuthenticated = () => {
   
   export const login = async (password, email) => {
     try {
-      console.log(`${PWA_API}/auth/local`)
       const { data } = await axios.post(`${PWA_API}/auth/local`, {
           password,
           email
@@ -37,13 +36,11 @@ export const isAuthenticated = () => {
       );
       return true;
     } catch (error) {
-      console.log("error", error);
       return false;
     }
   };
   
   export const logOut = (history) => {
-    console.log('history: ', history);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     //history.push("/login");

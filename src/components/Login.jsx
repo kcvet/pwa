@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { login } from './Auth'
+import { copyFileSync } from 'fs';
 
 function MadeWithLove() {
   return (
@@ -56,17 +57,35 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Login( {history} ) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(localStorage.getItem("username"));
+  const [password, setPassword] = useState(localStorage.getItem("password"));
+  const [remember, setRemeber] = useState(false)
+
+
   async function handleSubmit() {
+    if(remember) {
+      localStorage.setItem("username", email);
+      localStorage.setItem("password", password)
+      localStorage.setItem("checked", remember)
+      console.log("shitFam", email, password, remember)
+    } else {
+      localStorage.setItem("username","");
+      localStorage.setItem("password","");
+      localStorage.setItem("checked", remember)
+      console.log("yeetFam", email, password, remember)
+    }
     const success = login(password, email);
     success.then((result) =>
     	{
-        history.push('/');
+        history.push('/cars');
       }
     )
   }
 
+    function  handleClick(){
+      if(remember) setRemeber(false)
+      else setRemeber(true)
+    }
     function handleChangeEmail(event){
       setEmail(event.target.value);
     }
@@ -98,6 +117,7 @@ export default function Login( {history} ) {
               label="Email Address"
               name="email"
               autoComplete="email"
+              defaultValue={localStorage.getItem("username")}
               onChange = {handleChangeEmail}
               autoFocus
             />
@@ -109,14 +129,17 @@ export default function Login( {history} ) {
               name="password"
               label="Password"
               type="password"
+              defaultValue={localStorage.getItem("password")}
               id="password"
               autoComplete="current-password"
               onChange = {handleChangePassword}
 
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox value={true} color="primary" />}
               label="Remember me"
+              defaultValue={true}
+              onClick={handleClick}
             />
             <Button
               fullWidth
@@ -128,13 +151,8 @@ export default function Login( {history} ) {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/users" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

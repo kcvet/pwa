@@ -160,7 +160,7 @@ const CarView = ({ car, onClose, open }) => {
                 </Grid>
               ))}
             </Grid>
-            <MapView lng={car.geoLocation.lng} lat={car.geoLocation.lat}></MapView>
+            <MapView lng={car.geoLocation.lng} lat={car.geoLocation.lat} name={car.locationID.name} address={car.locationID.address.address1}></MapView>
             </div>
         </Dialog>
       </div>

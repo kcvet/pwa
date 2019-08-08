@@ -8,6 +8,7 @@ import ValidationDamagesSchema from "./ValidationDamagesSchema";
 import LocationForm from "./Form";
 import { newCollection } from "../../actions/common";
 import { notifySuccess, notifyError } from "../toast/Toast";
+import Notify from '../../utils/Notification'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -39,12 +40,13 @@ const LocationEdit = props => {
 
     newCollection(values, "cars/"+carID+"/damages")
       .then(result => {
-        notifySuccess("Successfully added new damage");
-        props.history.push("/");
+          // Let's check if the browser supports notifications
+        Notify("Successfully created new damage", notifySuccess("Successfully created new damage"))
+        props.history.push("/cars");
 
       })
       .catch(error => {
-        notifyError("Error when trying update location");
+        Notify("Error when trying to add new damage", notifyError("Error when trying to add new damage"))
       });
   };
 

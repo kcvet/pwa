@@ -160,7 +160,7 @@ const LocationView = ({ location, onClose, open }) => {
                 </Grid>
               ))}
             </Grid>
-            <MapView lng={location.geoLocation.lng} lat={location.geoLocation.lat}></MapView>
+            <MapView lng={location.geoLocation.lng} lat={location.geoLocation.lat} name={location.name} address={location.address.address1}></MapView>
             </div>
         </Dialog>
       </div>

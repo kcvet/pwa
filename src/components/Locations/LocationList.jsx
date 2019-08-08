@@ -13,7 +13,6 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -24,7 +23,7 @@ import axios from 'axios'
 import Image from 'material-ui-image'
 import screen from '../../utils/windowsDimensions'
 import AddIcon from '@material-ui/icons/Add';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import LocationView from "./ModalDetailView";
 
 
@@ -340,9 +339,9 @@ export default function EnhancedTable() {
                       {width > 768 ? <TableCell align="center">{row.status}</TableCell> : null}
                       {width > 768 ? <TableCell align="center">{row.address.city}</TableCell> : null}
                       <TableCell align="center">      
-                      <Link            
+                      <Link       
                         key="locations"
-                        to={"/locations/edit/"+row._id}
+                        to={{pathname:"/locations/edit/"+row._id, state:{row}}} 
                         style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}>
                           <Fab size="small" color="secondary" aria-label="edit" className={classes.fab}>
                           <AddIcon />

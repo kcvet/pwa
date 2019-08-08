@@ -4,25 +4,8 @@ import * as Yup from "yup";
 const expression = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
 
 export default Yup.object().shape({
-  code: Yup.string()
-    .matches(/^[A-Z]+/, "All letters must be uppercase!")
-    .required("Required"),
   name: Yup.string()
     .required("Required"),
-  phone: Yup.object().shape({
-    countryCode: Yup.string()
-      .matches(new RegExp("^(\\+)([0-9 ])+$"), "Please enter correct code format e.g. +365!")
-      .required("Required"),
-    number: Yup.number()
-      .required("Required"),
-  }),
-  fax: Yup.object().shape({
-    countryCode: Yup.string()
-      .matches(new RegExp("^(\\+)([0-9 ])+$"), "Please enter correct code format e.g. +365!")
-      .required("Required"),
-    number: Yup.number()
-      .required("Required"),
-  }),
   address: Yup.object().shape({
     city: Yup.string()
       .required("Required"),
@@ -32,6 +15,7 @@ export default Yup.object().shape({
       .min(0, "Zipcode cannot be a negative number")
       .required("Required"),
     country: Yup.string()
+      .matches(/^[a-zA-Z]+$/, "Must only contains letters")
       .required("Required"),
   }),
   geoLocation: Yup.object().shape({
@@ -54,6 +38,4 @@ export default Yup.object().shape({
       .matches(expression, "Not a valid url!")
       .required("Required"),
   })),
-  providerID: Yup.string()
-    .required("Required"),
 });

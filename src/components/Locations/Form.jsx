@@ -1,8 +1,7 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { updateCollection } from "../../actions/common";
-import { notifySuccess, notifyError } from "../../components/toast/Toast";import {
+import {
 
   Grid,
   Paper,

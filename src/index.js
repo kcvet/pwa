@@ -5,7 +5,8 @@ import App from './App';
 import { createBrowserHistory } from "history";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
-import { notifySuccess, notifyError } from "./components/toast/Toast";
+import { notifySuccess } from "./components/toast/Toast";
+import Notify from './utils/Notification'
 
 const history = createBrowserHistory();
 
@@ -24,13 +25,11 @@ const history = createBrowserHistory();
 // Learn more about service workers: https://bit.ly/CRA-PWA
 
  const swUrl = `/sw.js`;
- console.log('swUrl: ', swUrl);
  if ('serviceWorker' in navigator) {
    window.addEventListener('load', () => {
      navigator.serviceWorker.register(swUrl)
          .then((reg) => {
-           notifySuccess("Web application is now ready for offline use")
-           console.log('Service worker registered in scope.', reg)
+          Notify("Web application is now ready for offline use",  notifySuccess("Web application is now ready for offline use"))
          })
         .catch(function(err) {
            console.log("Service Worker Failed to Register", err);

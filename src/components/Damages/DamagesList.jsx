@@ -235,18 +235,15 @@ const EnhancedTable  = props => {
   const fetchCarData = async () => { 
   try {
       const carID = props.match.params.carid;
-      console.log('carID: ', carID);
-      console.log('adada', `${PWA_API}/api/cars/${carID}/damages`);
-      const result = await axios(`${PWA_API}/api/cars/${carID}/damages`,{
+      let api = `${PWA_API}/api/cars/${carID}/damages`
+      if (props.all) api = `${PWA_API}/api/cars/damages`
+      const result = await axios(api,{
         headers: {
           authorization: `Bearer ${key}`
         }
       });
-      
-      console.log('const result : ', result.data);
-      setLocations(result.data);
+            setLocations(result.data);
   } catch (error) {
-    console.log('error: ', error);
   //notifyError("Error when getting cars. Please refresh the page");
   }
 
