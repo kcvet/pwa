@@ -12,7 +12,7 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
- const PWA_API =  "http://localhost:9000" //"https://cautela.serveo.net"//"http://localhost:9000";
+ const PWA_API =  "http://localhost:3000" //"https://cautela.serveo.net"//"http://localhost:9000";
 // const PWA_API =  "https://cautela.serveo.net"//
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
@@ -145,7 +145,7 @@ workbox.routing.registerRoute(function(routeData) {
 })
 */
 workbox.routing.registerRoute(
-  /https:\/\/cautela.serveo.net\/api\/.*/,
+  /\/api\/.*/,
     new workbox.strategies.NetworkOnly({
     plugins: [bgSyncPlugin]
   }),
@@ -154,7 +154,7 @@ workbox.routing.registerRoute(
 
 
 workbox.routing.registerRoute(
-  /https:\/\/cautela.serveo.net\/api\/.*/,  
+  /\/api\/.*/,
   new workbox.strategies.NetworkOnly({
     plugins: [POSTbgSyncPlugin]
   }),
