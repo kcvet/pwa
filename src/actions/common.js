@@ -21,10 +21,10 @@ export const newCollection = async(data, endpoint)  => {
       headers: prepareHeaders("POST"),
       data
     })
-      Notify("Successfully created new collection",  notifySuccess("Successfully created new collection"))
+      Notify("Successfully created new collection",  notifySuccess)
       return response.data
   } catch (error) {
-    Notify("Error when trying to create a new collection", notifyError("Error when trying to create a new collection"))
+    Notify("Error when trying to create a new collection", notifyError)
     return error
   }
 }
@@ -55,10 +55,10 @@ export const updateCollection = async(id, data, endpoint)  => {
       headers: prepareHeaders("PUT"),
       data,
     })
-      Notify("Successfully updated collection",  notifySuccess("Successfully updated collection"))
+      Notify("Successfully updated collection",  notifySuccess)
       return response.data
   } catch (error) {
-    Notify("Error when trying to update collection", notifyError("Error when trying to update collection"))
+    Notify("Error when trying to update collection", notifyError)
     return error
   }
 }

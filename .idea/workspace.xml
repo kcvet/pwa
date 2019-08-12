@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="340636a3-c317-4e37-9986-4a18a0ad9ede" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sw.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/sw.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Notification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/actions/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/actions/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Damages/DamagesList.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Locations/LocationList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Locations/LocationList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ReservationHistories/ReservationList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ReservationHistories/ReservationList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Users/Edit.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Users/Edit.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/reservations/ReservationList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/reservations/ReservationList.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

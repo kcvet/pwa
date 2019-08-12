@@ -87,7 +87,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         {headRows.map(row => (
-          ['dropOffLocationID','status', 'pickUpLocationID', 'dropOffLocationID'].includes(row.id) && width < 769 ? null : 
+          ['dropOffLocationID.name','status', 'pickUpLocationID.name'].includes(row.id) && width < 769 ? null : 
           <TableCell
             key={row.id}
             align={row.numeric ? 'center' : 'left'}
@@ -198,8 +198,6 @@ export default function EnhancedTable() {
           authorization: `Bearer ${key}`
         }
       })
-
-      console.log('result.data.results: ', result.data.results);
       setReservations(result.data.results);
   } catch (error) {
   //notifyError("Error when getting cars. Please refresh the page");

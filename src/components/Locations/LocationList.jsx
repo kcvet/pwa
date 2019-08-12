@@ -89,7 +89,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         {headRows.map(row => (
-          ['mainImageResource','reservedCars', 'reservableCars', 'city', 'status'].includes(row.id) && width < 769 ? null : 
+          ['mainImageResource','reservedCars', 'reservableCars', 'address.city', 'status'].includes(row.id) && width < 769 ? null : 
           <TableCell
             key={row.id}
             align={row.numeric ? 'center' : 'left'}
@@ -196,7 +196,6 @@ export default function EnhancedTable() {
       const result = await axios(`${PWA_API}/api/locations`)
       setLocations(result.data);
   } catch (error) {
-  //notifyError("Error when getting cars. Please refresh the page");
   }
 
   };

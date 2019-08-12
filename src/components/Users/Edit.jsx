@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper, Container } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import { Formik } from "formik";
 import axios from "axios";
 import Spinner from "../../components/spinner/Spinner";
 import LocationForm from "./Form";
-import { updateCollection } from "../../actions/common";
-import { notifySuccess, notifyError } from "../../components/toast/Toast";
 import { prepareHeaders } from "../../actions/common"
 
 const { PWA_API } = require("../../utils/PWA_API")
@@ -48,22 +46,10 @@ const LocationEdit = props => {
         });
         setUserData(result.data);
       } catch (error) {
-        notifyError("Error when getting location");
       }
     };
     fetchLocationData();
   }, [locationID]);
-
-  const handleSubmit = values => {
-    updateCollection(values._id, values, "users")
-      .then(result => {
-        notifySuccess("Successfully update location");
-        props.history.push("/locations");
-      })
-      .catch(error => {
-        notifyError("Error when trying update location");
-      });
-  };
 
   if (userData._id) {
     return (
@@ -73,11 +59,6 @@ const LocationEdit = props => {
             render={props => <LocationForm {...props} />}
             initialValues={userData}
             //validationSchema={ValidationLocationSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              console.log('values: ', values);
-              handleSubmit(values);
-              setSubmitting(false);
-            }}
           />
         </Container>
       </div>
