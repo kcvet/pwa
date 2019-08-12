@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import withMobileDialog from "@material-ui/core/withMobileDialog";
-import MapView from '../../utils/GoogleMap'
+import moment from 'moment'
+
 import {
   Fab,
   DialogTitle,
@@ -74,7 +75,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CarView = ({ car, onClose, open }) => {
+const LocationView = ({ reservation, onClose, open }) => {
   const classes = useStyles();
   const [maxWidth] = useState("md");
 
@@ -82,9 +83,9 @@ const CarView = ({ car, onClose, open }) => {
     onClose();
   }
 
-  if (car._id) {
+  if (reservation._id) {
     return (
-      <div key={car._id}>
+      <div key={reservation._id}>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -106,60 +107,28 @@ const CarView = ({ car, onClose, open }) => {
               </Fab>
             </Box>
           </DialogActions>
-          <DialogTitle id="responsive-dialog-title">
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={4} md={6} style={{ margin: "auto" }}>
-                <h2>{car.plateNumber}</h2>
-              </Grid>
-              <Grid item xs={12} sm={8} md={6}>
-                {car.carModelID.mainImageResource && car.carModelID.mainImageResource.href && (
-                  <img
-                    alt={"Car"}
-                    src={car.carModelID.mainImageResource.href}
-                    style={{
-                      width: "150px"
-                      // height: "150px",
-                      // borderRadius: "50%",
-                      // backgroundSize: "cover"
-                    }}
-                  />
-                )}
-              </Grid>
-            </Grid>
-          </DialogTitle>
           <div className={classes.container}>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={12} md={12}>
-                <span className={classes.fontItem}>Status: {car.status}</span>
+            <Grid item xs={12} sm={12} md={12}>
+            <span className={classes.fontItem}><b>plate number:</b>  {reservation.carID.plateNumber}</span>
               </Grid>
               <Grid item xs={12} sm={12} md={12}>
-                <span className={classes.fontItem}>Battery charge level: {car.batteryChargeLevel}</span>
+                <span className={classes.fontItem}><b>Status:</b> {reservation.status}</span>
               </Grid>
               <Grid item xs={12} sm={12} md={12}>
-                <span className={classes.fontItem}>Condition: {car.condition}</span>
+                <span className={classes.fontItem}><b>pick up location:</b>  {reservation.pickUpLocationID.name}</span>
               </Grid>
               <Grid item xs={12} sm={12} md={12}>
-                <span className={classes.fontItem}>Odometer: {car.odometer}</span>
+                <span className={classes.fontItem}><b>travelPurpose:</b> {reservation.travelPurpose}</span>
+              </Grid>
+              <Grid item xs={12} sm={12} md={12}>
+                <span className={classes.fontItem}><b>check in odometer:</b> {reservation.checkOutOdometer} </span>
+              </Grid>
+
+              <Grid item xs={12} sm={12} md={12}>
+                <span className={classes.fontItem}><b>check in time:</b> {moment(reservation.checkInTime).format('YYYY-MM-DD HH:mm:ss')}</span>
               </Grid>
             </Grid>
-            <Grid container spacing={3} className={classes.marginTop5}>
-              {car.carModelID.additionalImageResources.map((tile, i) => (
-                <Grid item md={4} key={i}>
-                  <Card>
-                    <CardContent>
-                      <img src={tile.href} alt={tile.title} style={{
-                        width: "150px",
-                        height: "auto",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        backgroundSize: "cover"
-                      }}/>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-            <MapView lng={car.geoLocation.lng} lat={car.geoLocation.lat} name={car.locationID.name} address={car.locationID.address.address1}></MapView>
             </div>
         </Dialog>
       </div>
@@ -169,4 +138,4 @@ const CarView = ({ car, onClose, open }) => {
   }
 };
 
-export default withMobileDialog()(CarView);
+export default withMobileDialog()(LocationView);

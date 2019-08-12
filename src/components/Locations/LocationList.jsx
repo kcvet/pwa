@@ -68,10 +68,10 @@ function getSorting(order, orderBy) {
 const headRows = [
   { id: 'mainImageResource', numeric: false, disablePadding: false, label: '' },
   { id: 'name', numeric: false, disablePadding: true, label: 'name' },
-  { id: 'reservableCars', numeric: false, disablePadding: false, label: 'reservableCars' },
-  { id: 'reservedCars', numeric: false, disablePadding: false, label: 'reservedCars' },
+  { id: 'reservableCars', numeric: true, disablePadding: false, label: 'reservableCars' },
+  { id: 'reservedCars', numeric: true, disablePadding: false, label: 'reservedCars' },
   { id: 'status', numeric: false, disablePadding: false, label: 'status' },
-  { id: 'city', numeric: true, disablePadding: false, label: 'city' },
+  { id: 'address.city', numeric: false, disablePadding: false, label: 'city' },
   { id: 'buttons', numeric: false, disablePadding: false, label: 'buttons' },
 
   
@@ -154,51 +154,6 @@ const useToolbarStyles = makeStyles(theme => ({
   }
 }));
 
-const EnhancedTableToolbar = props => {
-  const classes = useToolbarStyles();
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subtitle1">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography variant="h6" id="tableTitle">
-            Nutrition
-          </Typography>
-        )}
-      </div>
-      <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-      </div>
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -226,14 +181,10 @@ export default function EnhancedTable() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setLocations] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const { height, width } = screen();
+  const {width } = screen();
   const [open, setOpen] = React.useState(false);
   const [location, setLocation] = useState({});
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -295,7 +246,6 @@ export default function EnhancedTable() {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
           <Table
             className={classes.table}

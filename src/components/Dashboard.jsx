@@ -24,19 +24,6 @@ import {
   Room,
 } from "@material-ui/icons";
 
-
-function MadeWithLove() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Built with love by the '}
-      <Link color="inherit" to="https://material-ui.com/">
-        Material-UI
-      </Link>
-      {' team.'}
-    </Typography>
-  );
-}
-
 const drawerWidth = 200;
 
 const useStyles = makeStyles(theme => ({
@@ -200,7 +187,7 @@ export default function Dashboard({ children, history }) {
           >
       <ListItem button key="locations" >
             <ListItemIcon ><Room/></ListItemIcon>
-            <ListItemText>Locations</ListItemText>
+            <ListItemText>locations</ListItemText>
           </ListItem>
           </Link>
           <Link            
@@ -210,7 +197,30 @@ export default function Dashboard({ children, history }) {
           >
       <ListItem button key="damages" >
             <ListItemIcon ><Room/></ListItemIcon>
-            <ListItemText>Damages</ListItemText>
+            <ListItemText>damages</ListItemText>
+          </ListItem>
+          </Link>
+          <Link            
+            key="reservationHistories"
+            to="/reservationHistories"
+            style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
+          >
+            <ListItem >
+          <ListItemText>RESERVATIONS</ListItemText>
+          </ListItem>
+      <ListItem button key="reservationHistories" >
+            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemText >histories</ListItemText>
+          </ListItem>
+          </Link>
+          <Link            
+            key="active"
+            to="/reservations"
+            style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
+          >
+      <ListItem button key="active" >
+            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemText >active</ListItemText>
           </ListItem>
           </Link>
         </List>
@@ -221,7 +231,6 @@ export default function Dashboard({ children, history }) {
         <Container maxWidth="lg" className={classes.container}>
           {children}
         </Container>
-        <MadeWithLove />
       </main>
     </div>
   );

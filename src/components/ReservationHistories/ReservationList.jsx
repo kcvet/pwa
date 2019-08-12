@@ -13,7 +13,6 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -21,10 +20,10 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import axios from 'axios'
-import Image from 'material-ui-image'
 import screen from '../../utils/windowsDimensions'
-import AddIcon from '@material-ui/icons/Add';
-import {Link} from "react-router-dom";
+
+import ReservationView from "./ModalDetailView";
+
 
 const { PWA_API } = require("../../utils/PWA_API");
 
@@ -65,13 +64,13 @@ function getSorting(order, orderBy) {
 }
 
 const headRows = [
-  { id: 'mainImageResource', numeric: false, disablePadding: false, label: '' },
-  { id: 'name', numeric: false, disablePadding: true, label: 'name' },
-  { id: 'reservableCars', numeric: false, disablePadding: false, label: 'reservableCars' },
-  { id: 'reservedCars', numeric: false, disablePadding: false, label: 'reservedCars' },
+  { id: 'carID.plateNumber', numeric: false, disablePadding: false, label: 'car' },
+  { id: 'pickUpLocationID.name', numeric: false, disablePadding: true, label: 'pickUpLocation' },
+  { id: 'dropOffLocationID.name', numeric: false, disablePadding: false, label: 'dropOffLocation' },
+  { id: 'userID', numeric: false, disablePadding: false, label: 'user' },
   { id: 'status', numeric: false, disablePadding: false, label: 'status' },
-  { id: 'city', numeric: true, disablePadding: false, label: 'city' },
-  { id: 'buttons', numeric: false, disablePadding: false, label: 'buttons' },
+  { id: 'pricing.total', numeric: true, disablePadding: false, label: 'total [€]' },
+  { id: 'travelPurpose', numeric: false, disablePadding: false, label: 'travelPurpose' },
 
   
 ];
@@ -88,7 +87,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         {headRows.map(row => (
-          ['mainImageResource','reservedCars', 'reservableCars', 'city', 'status'].includes(row.id) && width < 769 ? null : 
+          ['dropOffLocationID','status', 'pickUpLocationID', 'dropOffLocationID'].includes(row.id) && width < 769 ? null : 
           <TableCell
             key={row.id}
             align={row.numeric ? 'center' : 'left'}
@@ -153,50 +152,6 @@ const useToolbarStyles = makeStyles(theme => ({
   }
 }));
 
-const EnhancedTableToolbar = props => {
-  const classes = useToolbarStyles();
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div className={classes.title}>
-        {numSelected > 0 ? (
-          <Typography color="inherit" variant="subtitle1">
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography variant="h6" id="tableTitle">
-            Nutrition
-          </Typography>
-        )}
-      </div>
-      <div className={classes.spacer} />
-      <div className={classes.actions}>
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="Filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-      </div>
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -216,8 +171,7 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const EnhancedTable  = props => {
-  
+export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('licencePlate');
@@ -225,24 +179,28 @@ const EnhancedTable  = props => {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [rows, setLocations] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const { height, width } = screen();
+  const [rows, setReservations] = useState([]);
+  const {width } = screen();
+  const [open, setOpen] = React.useState(false);
+  const [reservation, setReservation] = useState({});
   const key = localStorage.getItem("token");
 
-  
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   useEffect(()=> {
   const fetchCarData = async () => { 
   try {
-      const carID = props.match.params.carid;
-      let api = `${PWA_API}/api/cars/${carID}/damages`
-      if (props.all) api = `${PWA_API}/api/cars/damages`
-      const result = await axios(api,{
+      const result = await axios(`${PWA_API}/api/reservationHistories?populate=["carID", "carModelID", "userID", "pickUpLocationID", "dropOffLocationID"]`, {
         headers: {
           authorization: `Bearer ${key}`
         }
-      });
-            setLocations(result.data);
+      })
+
+      console.log('result.data.results: ', result.data.results);
+      setReservations(result.data.results);
   } catch (error) {
   //notifyError("Error when getting cars. Please refresh the page");
   }
@@ -266,24 +224,11 @@ const EnhancedTable  = props => {
     }
     setSelected([]);
   }
-
-  function handleClick(event, name) {
-    const selectedIndex = selected.indexOf(name);
+  function handleClick(event, name, row) {
+    setReservation(row);
+    setOpen(true)
     let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
+    newSelected[0] = name;
     setSelected(newSelected);
   }
 
@@ -307,7 +252,6 @@ const EnhancedTable  = props => {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
           <Table
             className={classes.table}
@@ -328,34 +272,28 @@ const EnhancedTable  = props => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row._id);
+                  const labelId = `enhanced-table-checkbox-${index}`;
+
                   return (
                     <TableRow
                       hover
                       role="checkbox"
                       aria-checked={isItemSelected}
+                      onClick={event => handleClick(event, row._id, row)}
                       tabIndex={-1}
                       key={row._id}
                       selected={isItemSelected}
                     >
-                      {width > 768 ?  <TableCell align="center">
-                      <Image src={row.mainImageResource.href}/>
-                      </TableCell> : null}
-                    <TableCell component="th" id={row._id} scope="row" padding="none" size="small">
-                        {row.name}
-                      </TableCell>
-                      {width > 768 ?  <TableCell align="center">{row.reservableCars}</TableCell> : null}
-                      {width > 768 ? <TableCell align="center">{row.reservedCars}</TableCell> : null}
+                     <TableCell align="center">{row.carID.plateNumber}</TableCell>
+                     {width > 768 ?  <TableCell component="th" id={row._id} scope="row" padding="default" size="small">
+                        {row.pickUpLocationID.name}
+                      </TableCell>: null}
+                      {width > 768 ?  <TableCell align="center">{row.dropOffLocationID.name}</TableCell> : null}
+                     <TableCell align="center">{row.userID ? row.userID.firstName : null} {row.userID ? row.userID.lastName : null}</TableCell>
                       {width > 768 ? <TableCell align="center">{row.status}</TableCell> : null}
-                      {width > 768 ? <TableCell align="center">{row.address.city}</TableCell> : null}
-                      <TableCell align="center">      
-                      <Link            
-                        key="locations"
-                        to={"/locations/edit/"+row._id}
-                        style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}>
-                          <Fab size="small" color="secondary" aria-label="edit" className={classes.fab}>
-                          <AddIcon />
-                      </Fab></Link>
-                      </TableCell>
+                      <TableCell align="center">{row.pricing.totalWithDiscount}</TableCell>
+                    <TableCell align="center">{row.travelPurpose}</TableCell> 
+
 
                     </TableRow>
                   );
@@ -385,6 +323,7 @@ const EnhancedTable  = props => {
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
+        <ReservationView open={open} reservation={reservation} onClose={handleClose} />
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
@@ -393,5 +332,3 @@ const EnhancedTable  = props => {
     </div>
   );
 }
-
-export default EnhancedTable;

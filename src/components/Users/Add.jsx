@@ -11,11 +11,11 @@ const LocationEdit = props => {
   const handleSubmit = values => {
     newCollection(values, "users")
       .then(result => {
-        Notify("Successfully created new user", notifySuccess("Successfully created new user"))
+        Notify("Successfully created new user", notifySuccess)
         props.history.push("/login");
       })
       .catch(error => {
-        Notify("Error when trying to create a new user", notifyError("Error when trying to create a new user"))
+        Notify("Error when trying to create a new user", notifyError)
       });
   };
 

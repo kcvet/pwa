@@ -7,8 +7,20 @@ export default function notifyMe(msg, notify) {
   
     // Let's check whether notification permissions have already been granted
     else if (Notification.permission === "granted") {
+      navigator.serviceWorker.getRegistration().then(function(reg) {
+        var options = {
+          body: 'Here is a notification body!',
+          icon: 'images/example.png',
+          vibrate: [100, 50, 100],
+          data: {
+            dateOfArrival: Date.now(),
+            primaryKey: 1
+          }
+        };
+        reg.showNotification(msg, options);
+      });
       // If it's okay let's create a notification
-      var notification = new Notification(msg);
+      // const notification =  Notification(msg);
     }
   
     // Otherwise, we need to ask the user for permission
@@ -16,11 +28,22 @@ export default function notifyMe(msg, notify) {
       Notification.requestPermission(function (permission) {
         // If the user accepts, let's create a notification
         if (permission === "granted") {
-          var notification = new Notification(msg);
+          navigator.serviceWorker.getRegistration().then(function(reg) {
+            var options = {
+              body: 'Here is a notification body!',
+              icon: 'images/example.png',
+              vibrate: [100, 50, 100],
+              data: {
+                dateOfArrival: Date.now(),
+                primaryKey: 1
+              }
+            };
+            reg.showNotification(msg, options);
+          });
         }
       });
-    } else if (Notification.permission === 'denied') {
-        notify()
+    } else {
+        notify(msg)
     }
   
     // Finally, if the user has denied notifications and you 

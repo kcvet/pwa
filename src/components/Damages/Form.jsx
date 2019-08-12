@@ -78,7 +78,6 @@ const LocationForm = props => {
   const getBase64 = file => {
     setFiles(file.base64);
     props.values.images = [{content: file.base64}];
-    console.log(' props.values.: ',  props.values);
   }
   return (
     <div className={classes.root}>

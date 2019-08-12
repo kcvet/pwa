@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import {
-
   Grid,
   Paper,
   Box,
@@ -11,12 +10,8 @@ import {
   InputAdornment
 } from "@material-ui/core";
 import {
-  Send,
   Delete,
-  Code,
   Store,
-  Language,
-  Phone,
   LocationOn,
   Home,
   LocationCity,

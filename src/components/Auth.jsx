@@ -40,7 +40,7 @@ export const isAuthenticated = () => {
     }
   };
   
-  export const logOut = (history) => {
+  export const logOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     //history.push("/login");

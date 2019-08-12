@@ -12,8 +12,8 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
- const PWA_API =  "http://localhost:3000" //"https://cautela.serveo.net"//"http://localhost:9000";
-// const PWA_API =  "https://cautela.serveo.net"//
+const PWA_API =  "http://localhost:3000" //"https://cautela.serveo.net"//"http://localhost:9000";
+ //const PWA_API = "https://ac3b4119.ngrok.io"//
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
@@ -31,28 +31,38 @@ if (workbox) {
 
 
 workbox.routing.registerRoute(
-  `${PWA_API}/api/locations`,
+  `/api/locations`,
   new workbox.strategies.StaleWhileRevalidate()
 );
 
 workbox.routing.registerRoute(
-  new RegExp( `${PWA_API}/api/users.*`),
+  new RegExp( `/api/users.*`),
   new workbox.strategies.StaleWhileRevalidate()
 );
 
 
 workbox.routing.registerRoute(
-  new RegExp( `${PWA_API}/api/locations/.*`),
+  new RegExp( `/api/locations/.*`),
   new workbox.strategies.StaleWhileRevalidate()
 );
 
 workbox.routing.registerRoute(
-  new RegExp( `${PWA_API}/api/cars/.*/damages`),
+  new RegExp( `/api/reservationHistories.*`),
   new workbox.strategies.StaleWhileRevalidate()
 );
 
 workbox.routing.registerRoute(
-  `${PWA_API}/api/cars?populate=["carModelID", "locationID"]`,
+  new RegExp( `/api/reservations.*`),
+  new workbox.strategies.NetworkFirst()
+);
+
+workbox.routing.registerRoute(
+  new RegExp( `/api/cars/.*/damages`),
+  new workbox.strategies.StaleWhileRevalidate()
+);
+
+workbox.routing.registerRoute(
+  `/api/cars?populate=["carModelID", "locationID"]`,
   new workbox.strategies.StaleWhileRevalidate()
 );
 
@@ -119,31 +129,6 @@ const POSTbgSyncPlugin = new workbox.backgroundSync.Plugin('POST', {
 });
 
 
-/*
-workbox.routing.registerRoute(function(routeData) {
-  return (routeData.event.request.headers.get('accept').includes('text/html'));
-}, function(args) {
-  return caches.match(args.event.request)
-    .then(function (response) {
-      if(response) {
-        return response;
-      } else {
-        return fetch(args.event.request)
-          .then(function(res) {
-            return caches.open('dynamic')
-              .then(cache.put(args.event.request.url, res.clone()));
-              return res;
-          })
-          .catch(function (err) {
-            return caches.match('/offline.html')
-              .then(function (res) {
-                return res;
-              })
-          })
-      }
-    })
-})
-*/
 workbox.routing.registerRoute(
   /\/api\/.*/,
     new workbox.strategies.NetworkOnly({

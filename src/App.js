@@ -12,6 +12,9 @@ import Login from './components/Login'
 import Damages from './components/Damages/CarList'
 import UserAdd from './components/Users/Add'
 import UserEdit from './components/Users/Edit'
+import ReservationHistories from './components/ReservationHistories/ReservationList'
+import ActiveReservations from './components/reservations/ReservationList'
+
 
 function App() {
       return (
@@ -22,6 +25,8 @@ function App() {
                   <PrivateRoute  path="/cars/:carid/newDamage" component={(props) =><Dashboard {...props}><DamagesAdd {...props}></DamagesAdd></Dashboard>} />
                   <PrivateRoute  path="/cars/:carid/damages" component={(props) =><Dashboard {...props}><Damages {...props}/></Dashboard>} />
                   <PrivateRoute  exact path="/locations" component={(props) => <Dashboard {...props}><Locations {...props}/></Dashboard>} />
+                  <PrivateRoute  exact path="/reservationHistories" component={(props) => <Dashboard {...props}><ReservationHistories {...props}/></Dashboard>} />
+                  <PrivateRoute  exact path="/reservations" component={(props) => <Dashboard {...props}><ActiveReservations {...props}/></Dashboard>} />
                   <PrivateRoute  exact path="/users/me" component={(props) => <Dashboard {...props}><UserEdit {...props}/></Dashboard>} />
                   <PrivateRoute  path="/locations/edit/:id" component={(props) =><Dashboard {...props}><LocationsEdit {...props}/></Dashboard>} />
                   <Route path="/login" component={Login}/>

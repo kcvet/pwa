@@ -44,6 +44,7 @@
     "jest-watch-typeahead": "0.3.0",
     "material-ui-image": "^3.2.0",
     "mini-css-extract-plugin": "0.5.0",
+    "moment": "^2.24.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
@@ -78,7 +79,6 @@
     "start": "node scripts/start.js",
     "copy": "copyfiles -u 1 src/**/**/* src/**/* src/* build",
     "build": "npm run copy && workbox injectManifest workbox-config.js && node scripts/start.js",
-    "ngrook": "set PWA_API=https://8ee6c8dd.ngrok.io && npm run copy && workbox injectManifest workbox-config.js && node scripts/start.js",
     "test": "node scripts/test.js"
   },
   "proxy": "http://localhost:9000",
@@ -146,5 +146,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1"
   }
 }

@@ -29,7 +29,7 @@ const history = createBrowserHistory();
    window.addEventListener('load', () => {
      navigator.serviceWorker.register(swUrl)
          .then((reg) => {
-          Notify("Web application is now ready for offline use",  notifySuccess("Web application is now ready for offline use"))
+          Notify("Web application is now ready for offline use", notifySuccess)
          })
         .catch(function(err) {
            console.log("Service Worker Failed to Register", err);
