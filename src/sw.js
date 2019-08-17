@@ -121,11 +121,11 @@ workbox.routing.registerRoute(
 );
 
 const bgSyncPlugin = new workbox.backgroundSync.Plugin('PUT', {
-  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
+  maxRetentionTime: 24 * 60 // Ponavljamo 24 ur (dolocimo v minutah)
 });
 
 const POSTbgSyncPlugin = new workbox.backgroundSync.Plugin('POST', {
-  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
+  maxRetentionTime: 24 * 60 
 });
 
 

@@ -31,7 +31,7 @@ const DamagesList = props => {
     }, []);
   
     return(
-        <CardList cars={damages} carID={carID}></CardList>
+        <CardList cars={damages} all={props.all} carID={carID}></CardList>
     )
 }
 

@@ -55,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const Album = (damages) =>  {
+  console.log('damages: ', damages);
   const classes = useStyles();
 
   return (
@@ -71,7 +72,8 @@ const Album = (damages) =>  {
       <main>
         <Container className={classes.cardGrid} maxWidth="lg">
           {/* End hero unit */}
-          <Grid container spacing={4}>
+          <Grid container spacing={4}  marginBottom= "10px"
+>
             {damages.cars.map(card => (
               <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
                 <Card className={classes.card}>
@@ -104,6 +106,8 @@ const Album = (damages) =>  {
               </Grid>
             ))}
           </Grid>
+        </Container>
+        { !damages.all ? 
           <Link key="new" to={'/cars/'+damages.carID+'/newDamage'}>
           <Button
               type="button"
@@ -113,8 +117,7 @@ const Album = (damages) =>  {
               >
                Add Damage
               </Button>
-             </Link>
-        </Container>
+             </Link> : null }
       </main>
       {/* Footer */}
       {/* End footer */}

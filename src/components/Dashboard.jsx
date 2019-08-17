@@ -22,6 +22,11 @@ import { logOut } from './Auth';
 import {Link} from "react-router-dom";
 import {
   Room,
+  Face,
+  DirectionsCar,
+  Build,
+  ChangeHistory,
+  Backup,
 } from "@material-ui/icons";
 
 const drawerWidth = 200;
@@ -166,7 +171,7 @@ export default function Dashboard({ children, history }) {
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
           >
       <ListItem button key="user" >
-            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemIcon ><Face/></ListItemIcon>
             <ListItemText>profile</ListItemText>
           </ListItem>
           </Link>
@@ -176,7 +181,7 @@ export default function Dashboard({ children, history }) {
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
           >
       <ListItem button key="cars" >
-            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemIcon ><DirectionsCar/></ListItemIcon>
             <ListItemText>cars</ListItemText>
           </ListItem>
           </Link>
@@ -196,7 +201,7 @@ export default function Dashboard({ children, history }) {
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
           >
       <ListItem button key="damages" >
-            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemIcon ><Build/></ListItemIcon>
             <ListItemText>damages</ListItemText>
           </ListItem>
           </Link>
@@ -209,7 +214,7 @@ export default function Dashboard({ children, history }) {
           <ListItemText>RESERVATIONS</ListItemText>
           </ListItem>
       <ListItem button key="reservationHistories" >
-            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemIcon ><Backup/></ListItemIcon>
             <ListItemText >histories</ListItemText>
           </ListItem>
           </Link>
@@ -219,7 +224,7 @@ export default function Dashboard({ children, history }) {
             style={{ textDecoration: "none", color: "rgba(0, 0, 0, 0.7)" }}
           >
       <ListItem button key="active" >
-            <ListItemIcon ><Room/></ListItemIcon>
+            <ListItemIcon ><ChangeHistory/></ListItemIcon>
             <ListItemText >active</ListItemText>
           </ListItem>
           </Link>
